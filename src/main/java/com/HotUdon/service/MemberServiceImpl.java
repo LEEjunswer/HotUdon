@@ -30,6 +30,21 @@ public class MemberServiceImpl implements MemberService{
 
         return mapEntityToDTO(memberEntity);
     }
+    @Override
+    public MemberDTO findByLoginId(String id){
+        Optional<Member> member = memberRepository.findByLoginId(id);
+        Member memberEntity = member.get();
+
+        return  mapEntityToDTO(memberEntity);
+    }
+    @Override
+    public  MemberDTO findByNickname(String nick){
+        Optional<Member> member = memberRepository.findByNickName(nick);
+        Member memberEntity = member.get();
+
+
+        return mapEntityToDTO(memberEntity);
+    }
 
     @Override
     public MemberDTO findById(Long id) {
