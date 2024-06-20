@@ -23,13 +23,14 @@ public class MemberServiceImpl implements MemberService{
         return mapEntityToDTO(member);
     }
 
-    @Override
-    public MemberDTO save(MemberDTO memberDTO) {
-        Optional<Member> member = memberRepository.save(mapDTOToEntity(memberDTO));
-        Member memberEntity = member.get();
+        @Override
+        public int save(MemberDTO memberDTO) {
+            Member member = memberRepository.save(mapDTOToEntity(memberDTO));
+            Long memberId = member.getId();
+            return memberId != null ? memberId.intValue() : 0;
+        }
 
-        return mapEntityToDTO(memberEntity);
-    }
+
     @Override
     public MemberDTO findByLoginId(String id){
         Optional<Member> member = memberRepository.findByLoginId(id);

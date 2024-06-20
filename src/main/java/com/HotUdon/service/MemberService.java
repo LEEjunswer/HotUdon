@@ -4,7 +4,7 @@ import com.HotUdon.dto.MemberDTO;
 
 public interface MemberService {
     MemberDTO findByLoginIdAndPassword(String loginId, String password);
-    MemberDTO save(MemberDTO memberDTO);
+    int save(MemberDTO memberDTO);
     MemberDTO findById(Long id);
     MemberDTO findByLoginId (String id);
     MemberDTO findByNickname(String nick);

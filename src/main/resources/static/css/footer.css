@@ -1,0 +1,25 @@
+#footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    color: white;
+    padding: 10px;
+}
+#footer-category{
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+    align-items: center;
+}
+
+.category-btn{
+
+     background-color: black;
+    color: white;
+    width: 30px;
+    height: 20px;
+}
+span{
+    margin-bottom: 5px;
+}

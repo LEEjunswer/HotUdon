@@ -1,5 +1,6 @@
 package com.HotUdon.dto;
 
+import com.HotUdon.model.Role;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,6 +40,8 @@ public class MemberDTO {
     private String Status;
 
     private int cash;
+
+    private Role role;
 
     private String grade;
 }

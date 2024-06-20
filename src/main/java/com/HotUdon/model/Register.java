@@ -16,7 +16,7 @@ import org.hibernate.annotations.Fetch;
 public class Register {
 
     @Id
-    @Column(name = "regisiter_id" ,nullable = false)
+    @Column(name = "register_id" ,nullable = false)
     @GeneratedValue
     @Comment("상품등록 PK")
     private Long Id;

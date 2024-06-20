@@ -3,6 +3,7 @@ package com.HotUdon.controller.API;
 import com.HotUdon.model.Member;
 import com.HotUdon.service.MemberServiceImpl;
 import jakarta.servlet.http.HttpSession;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,9 +13,10 @@ import org.springframework.web.servlet.view.RedirectView;
 
 @Slf4j
 @RestController
+@NoArgsConstructor
 public class MemberApiController {
 
-    MemberServiceImpl memberService;
+    private MemberServiceImpl memberService;
      HttpSession session;
     @RequestMapping(value = "/joinFormId",method = RequestMethod.POST)
     public String checkJoinFormLoginId(Member member){
