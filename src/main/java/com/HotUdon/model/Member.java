@@ -63,7 +63,10 @@ public class Member {
     private String Status;
     @Comment("고객 보유 금액")
     private int cash;
-    
+
+    @Comment("Role") // 유저인가 관리자인가 매니저인가
+    private Role role;
+
     @Comment("고객 등급") // Enum or String or int 고민중
     private String grade;
 }

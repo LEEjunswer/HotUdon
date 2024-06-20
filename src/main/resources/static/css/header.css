@@ -1,0 +1,32 @@
+.navbar .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 0 1rem;
+}
+
+.logo-div {
+    flex: 1;
+}
+#login-container{
+    display: flex;
+    justify-content: center;
+}
+.search-container {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+}
+
+.actions {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+#searchForm {
+    width: 100%;
+    max-width: 400px;
+}
