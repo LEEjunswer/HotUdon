@@ -10,10 +10,11 @@ import org.hibernate.annotations.Comment;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "auction")
 public class Auction {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "auction_id")
     private Long id;
 

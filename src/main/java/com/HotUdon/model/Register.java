@@ -44,7 +44,7 @@ public class Register {
 
     //판매자 회원
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="seller_id" , foreignKey = @ForeignKey(name= "register_IBFK_1"))
+    @JoinColumn(name = "seller_id", foreignKey = @ForeignKey(name = "new_register_fk_seller"))
     private Member member;
 
     //옥션은 isAuction 이 true일떄만 적용이 된다;

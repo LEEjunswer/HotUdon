@@ -1,0 +1,36 @@
+#loginId{
+    border: 1px solid dimgray;
+}
+#password{
+    border: 1px solid dimgray;
+}
+#passwordCheck{
+    border: 1px solid dimgray;
+}
+#postcode{
+    border: 1px solid dimgray;
+}
+#address{
+    border-bottom: 1px solid dimgray;
+}
+#detailAddress{
+    border-bottom: 1px solid dimgray;
+}
+#nickname{
+    border: 1px solid dimgray;
+}
+#emailDomain{
+    border-bottom: 1px solid dimgray;
+}
+#join_buttons{
+    display:  flex;
+
+    justify-content: center;
+}
+#emailId{
+    border-bottom:  1px solid dimgray;
+}
+#passwordResult{
+    font-size: 8px;
+    font-weight: lighter;
+}

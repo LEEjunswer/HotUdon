@@ -24,7 +24,7 @@ public class Member {
     @Column(name = "member_id",nullable = false)
     private Long id;
 
-    @Comment("로그인 ID Email 중복 불가")
+    @Comment("로그인 ID")
     @Column(unique = true, updatable = false)
     private String loginId;
 
@@ -39,8 +39,14 @@ public class Member {
     @Column(unique = true)
     private String phone;
 
+
+    @Comment("우편번호")
+    private int postCode;
     @Comment("유저 주소")
-    private String location;
+    private String address;
+    @Comment("유저 주소 디테일")
+    private String addressDetail;
+
 
     @Comment("유저 회원가입일")
     @Column(updatable = false)

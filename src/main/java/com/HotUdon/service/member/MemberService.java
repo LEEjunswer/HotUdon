@@ -1,4 +1,4 @@
-package com.HotUdon.service;
+package com.HotUdon.service.member;
 
 import com.HotUdon.dto.MemberDTO;
 

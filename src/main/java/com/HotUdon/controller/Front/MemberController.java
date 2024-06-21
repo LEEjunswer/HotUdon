@@ -1,8 +1,10 @@
 package com.HotUdon.controller.Front;
 
-import com.HotUdon.service.MemberServiceImpl;
+import com.HotUdon.dto.MemberDTO;
+import com.HotUdon.service.member.MemberServiceImpl;
+import com.HotUdon.session.SessionConst;
 import jakarta.servlet.http.HttpSession;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
 
@@ -21,17 +23,18 @@ public class MemberController {
 
     @GetMapping("/join")
     public String joinForm(HttpSession session, RedirectAttributes redirectAttributes){
-        if(session.getAttribute("id") != null){
+
+        if( session.getAttribute(SessionConst.USER_ID) != null){
             redirectAttributes.addFlashAttribute("error","잘못된 접근입니다");
             return "index";
 
         }
 
-        return "joinForm";
+        return "member/join";
     }
     @PostMapping("/join")
-    public String getJoinForm(RedirectAttributes redirectAttributes, Model model) {
-
+    public String getJoinForm(RedirectAttributes redirectAttributes, Model model, MemberDTO memberDTO) {
+        memberService.save(memberDTO);
 
         redirectAttributes.addFlashAttribute("suc","성공적으로 회원가입이 완료되었습니다");
         return "index";

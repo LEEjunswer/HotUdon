@@ -27,6 +27,8 @@ repositories {
 }
 
 dependencies {
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
@@ -34,11 +36,19 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	implementation group: 'org.json', name: 'json', version: '20240303'
 	implementation 'org.glassfish.jaxb:jaxb-runtime:3.0.2'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+//	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.4'
+
+		/*이메일 인증*/
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	testImplementation("org.junit.platform:junit-platform-launcher:1.5.2")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
+	//밑에는 로그체크 자바서블렛
+	compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
 }
 
 tasks.named('test') {

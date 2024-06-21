@@ -1,10 +1,9 @@
-package com.HotUdon.service;
+package com.HotUdon.service.member;
 
 import com.HotUdon.dto.MemberDTO;
 import com.HotUdon.model.Member;
 import com.HotUdon.repository.MemberRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +56,9 @@ public class MemberServiceImpl implements MemberService{
         memberDTO.setId(member.getId());
         memberDTO.setCash(member.getCash());
         memberDTO.setGrade(member.getGrade());
-        memberDTO.setLocation(member.getLocation());
+        memberDTO.setPostCode(member.getPostCode());
+        memberDTO.setAddress(member.getAddress());
+        memberDTO.setAddressDetail(member.getAddressDetail());
         memberDTO.setPhone(member.getPhone());
         memberDTO.setPoint(member.getPoint());
         memberDTO.setPassword(member.getPassword());
@@ -76,7 +77,9 @@ public class MemberServiceImpl implements MemberService{
         member.setPassword(memberDTO.getPassword());
         member.setGrade(memberDTO.getGrade());
         member.setCash(memberDTO.getCash());
-        member.setLocation(memberDTO.getLocation());
+        member.setPostCode(memberDTO.getPostCode());
+        member.setAddress(memberDTO.getAddress());
+        member.setAddressDetail(memberDTO.getAddressDetail());
         member.setPhone(memberDTO.getPhone());
         member.setPoint(memberDTO.getPoint());
         member.setNickName(memberDTO.getNickName());

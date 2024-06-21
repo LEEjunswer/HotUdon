@@ -1,34 +1,34 @@
 package com.HotUdon.controller.API;
 
 import com.HotUdon.model.Member;
-import com.HotUdon.service.MemberServiceImpl;
+import com.HotUdon.service.member.MemberServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Slf4j
 @RestController
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class MemberApiController {
 
-    private MemberServiceImpl memberService;
-     HttpSession session;
-    @RequestMapping(value = "/joinFormId",method = RequestMethod.POST)
-    public String checkJoinFormLoginId(Member member){
-        if (memberService.findByLoginId(member.getLoginId()) != null){
+    private final MemberServiceImpl memberService;
+    private final HttpSession session;
+
+    @PostMapping(value = "/joinFormId")
+    public String checkJoinFormLoginId(@RequestParam String loginId){
+        if (memberService.findByLoginId(loginId) != null){
             return "fail";
         }
         return "suc";
 
     }
-    @RequestMapping(value= "joinFormNick", method =  RequestMethod.POST)
-    public String checkJoinFormNick(Member member){
-        if(memberService.findByNickname(member.getNickName() )!= null){
+    @PostMapping(value= "/joinFormNick")
+    public String checkJoinFormNick(@RequestParam String nickname){
+        if(memberService.findByNickname(nickname)!= null){
             return "fail";
         }
         return "suc";

@@ -27,7 +27,12 @@ public class MemberDTO {
 
     private String phone;
 
-    private String location;
+
+    private int postCode;
+
+    private String address;
+
+    private String addressDetail;
 
     private String regDate;
 
