@@ -31,8 +31,9 @@ function checkPw(){
 }
 
 function nickValidCheck(){
+    event.preventDefault();
     let nickname = document.getElementById("nickname").value;
-    fetch("/joinFormNick" +nickname , {
+    fetch("/joinFormNick?nickname=" +nickname , {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -64,6 +65,7 @@ function isValidEmail(email) {
 }
 
 function  idValidCheck() {
+    event.preventDefault();
     const loginId = document.getElementById("loginId").value;
     const koreanPattern = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     const spacePattern = /\s/;
@@ -76,7 +78,7 @@ function  idValidCheck() {
         return;
     }
 
-    fetch("/joinFormId" +loginId, {
+    fetch("/joinFormId?loginId=" +loginId, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -84,8 +86,8 @@ function  idValidCheck() {
     })
         .then(response => response.json())
         .then(data => {
-
-            if (data ==="suc") {
+               console.log(data.status);
+            if (data.status ==="suc") {
                 idCheck =1;
                 alert("사용 가능한 아이디입니다.")
 

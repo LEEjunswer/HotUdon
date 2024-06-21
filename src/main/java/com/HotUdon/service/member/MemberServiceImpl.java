@@ -33,15 +33,14 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public MemberDTO findByLoginId(String id){
         Optional<Member> member = memberRepository.findByLoginId(id);
-        Member memberEntity = member.get();
+        Member memberEntity = member.orElseThrow(() -> new RuntimeException("Member not found"));
 
         return  mapEntityToDTO(memberEntity);
     }
     @Override
     public  MemberDTO findByNickname(String nick){
         Optional<Member> member = memberRepository.findByNickName(nick);
-        Member memberEntity = member.get();
-
+        Member memberEntity = member.orElseThrow(() -> new RuntimeException("Member not found"));
 
         return mapEntityToDTO(memberEntity);
     }
