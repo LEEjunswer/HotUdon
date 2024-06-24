@@ -7,7 +7,9 @@ import jakarta.servlet.http.HttpSession;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
@@ -25,40 +27,25 @@ public class MemberApiController {
 
         @PostMapping(value = "/joinFormId")
         public ResponseEntity<Map<String, String>> checkLoginId(@RequestParam String loginId){
+            System.out.println("loginId = " + loginId);
             Map<String,String> response = new HashMap<>();
-            try {
-                memberService.findByLoginId(loginId);
+            if(memberService.findByLoginId(loginId) != null) {
                 response.put("status", "fail");
                 return ResponseEntity.ok().body(response);
-            } catch (RuntimeException e) {
+            }
                 response.put("status", "suc");
                 return ResponseEntity.ok().body(response);
-            }
-
         }
     @PostMapping(value= "/joinFormNick")
     public ResponseEntity<Map<String,String>> checkNickname(@RequestParam String nickname){
             Map<String,String> response = new HashMap<>();
-        System.out.println("nickname = " + nickname);
-        try{
-            response.put("status","fail");
-            memberService.findByNickname(nickname);
+        if(memberService.findByNickname(nickname) != null) {
+            response.put("status", "fail");
             return ResponseEntity.ok().body(response);
-        }catch(RuntimeException e) {
+        }
             response.put("status","suc");
             return ResponseEntity.ok().body(response);
-        }
-        }
 
-// model은 보안에 맞게 넣기 @Aut
-    @RequestMapping(value = "/login" , method = RequestMethod.POST)
-    public RedirectView checkLogin(Model  model, Member member){
-
-        if(memberService.findByLoginIdAndPassword(member.getLoginId(), member.getPassword()) != null) {
-
-            return new RedirectView("home");
         }
-        return  new RedirectView("loginForm");
-    }
 
 }

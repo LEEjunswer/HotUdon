@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Slf4j
 @Configuration
+//일반적인 웹 설정과 인터셉터를 관리
 public class WebConfig implements WebMvcConfigurer {
 
     @Override

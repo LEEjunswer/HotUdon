@@ -1,0 +1,68 @@
+spring:
+  application:
+    name: HotUdon
+  mvc:
+    static-path-pattern: /static/**
+  web:
+    resources:
+      static-locations: classpath:/static/
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  mustache:
+    suffix: .html
+  servlet:
+    session:
+      tracking-modes: cookie
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 10MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/HotUdon?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    username: root
+    password: 1120rorn
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  profiles:
+    active: local
+    group:
+      local: common, secret
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: YOUR_KAKAO_CLIENT_ID
+            client-secret: YOUR_KAKAO_CLIENT_SECRET
+            redirect-uri: "{baseUrl}/login/oauth2/code/kakao"
+            authorization-grant-type: authorization_code
+            scope: profile_nickname, profile_image
+            client-name: Kakao
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+server:
+  port: 8085
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.web.servlet: DEBUG
+
+profile:
+  upload:
+    path: src/main/resources/static/profile
+upload:
+  path: src/main/resources/static/product

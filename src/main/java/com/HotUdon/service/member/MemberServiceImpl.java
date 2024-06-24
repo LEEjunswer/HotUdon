@@ -2,19 +2,26 @@ package com.HotUdon.service.member;
 
 import com.HotUdon.dto.MemberDTO;
 import com.HotUdon.model.Member;
+import com.HotUdon.model.Role;
 import com.HotUdon.repository.MemberRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Transactional
 public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public MemberDTO findByLoginIdAndPassword(String loginId, String password) {
@@ -24,26 +31,36 @@ public class MemberServiceImpl implements MemberService{
 
         @Override
         public int save(MemberDTO memberDTO) {
-            Member member = memberRepository.save(mapDTOToEntity(memberDTO));
+            Member member = new Member();
+            member.setLoginId(memberDTO.getLoginId());
+            member.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
+            member.setRole(Role.USER);
+            memberRepository.save(member);
             Long memberId = member.getId();
             return memberId != null ? memberId.intValue() : 0;
         }
 
 
     @Override
-    public MemberDTO findByLoginId(String id){
-        Optional<Member> member = memberRepository.findByLoginId(id);
-        Member memberEntity = member.orElseThrow(() -> new RuntimeException("Member not found"));
-
-        return  mapEntityToDTO(memberEntity);
+    public MemberDTO findByLoginId(String id) {
+        Optional<Member>  memberOptional  = memberRepository.findByLoginId(id);
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+            return mapEntityToDTO(member);
+        } else {
+            return null;
+        }
     }
     @Override
     public  MemberDTO findByNickname(String nick){
-        Optional<Member> member = memberRepository.findByNickName(nick);
-        Member memberEntity = member.orElseThrow(() -> new RuntimeException("Member not found"));
-
-        return mapEntityToDTO(memberEntity);
-    }
+        Optional<Member> memberOptional  = memberRepository.findByNickName(nick);
+        if(memberOptional.isPresent()){
+            Member member = memberOptional.get();
+            return mapEntityToDTO(member);
+        }else {
+            return null;
+        }
+        }
 
     @Override
     public MemberDTO findById(Long id) {

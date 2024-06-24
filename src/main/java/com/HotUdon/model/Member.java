@@ -1,9 +1,6 @@
 package com.HotUdon.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -71,8 +68,16 @@ public class Member {
     private int cash;
 
     @Comment("Role") // 유저인가 관리자인가 매니저인가
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Comment("고객 등급") // Enum or String or int 고민중
     private String grade;
+
+    @PrePersist
+    protected void onCreate() {
+        LocalDateTime dateTime = LocalDateTime.now();
+        this.regDate = dateTime.format(DateTimeFormatter.ISO_DATE_TIME);
+    }
+
 }

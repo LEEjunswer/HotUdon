@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -23,7 +23,7 @@
             </label>
         </form>
     </div>
-    <div th:if="${session.loginId}" class="actions">
+    <div sec:authorize="isAuthenticated()" class="actions">
         <div class="dropdown dropdown-end">
             <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
                 <div class="indicator">
@@ -61,7 +61,7 @@
             </ul>
         </div>
     </div>
-    <div th:unless="${session.loginId}" class="actions w-30">
+    <div sec:authorize="!isAuthenticated()" class="actions w-30">
         <a class="text-lg font-bold" href="/member/join">회원가입</a>
         <a class="text-lg font-bold" href="/member/login">로그인</a>
     </div>

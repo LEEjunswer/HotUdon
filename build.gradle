@@ -44,7 +44,12 @@ dependencies {
 
 		/*이메일 인증*/
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-
+	/*스프링 시큐리티 oauth2*/
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	/*밑에게 있어야 타임리프에서 Oauth2를 사용 가능하다*/
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	implementation 'org.springframework.security:spring-security-oauth2-jose'
 	testImplementation("org.junit.platform:junit-platform-launcher:1.5.2")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
 	//밑에는 로그체크 자바서블렛

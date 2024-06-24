@@ -7,5 +7,5 @@ public interface MemberService {
     int save(MemberDTO memberDTO);
     MemberDTO findById(Long id);
     MemberDTO findByLoginId (String id);
-    MemberDTO findByNickname(String nick);
+    MemberDTO findByNickname(String nickName);
 }

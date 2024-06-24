@@ -7,7 +7,7 @@
 #passwordCheck{
     border: 1px solid dimgray;
 }
-#postcode{
+#postCode{
     border: 1px solid dimgray;
 }
 #address{
@@ -16,7 +16,7 @@
 #detailAddress{
     border-bottom: 1px solid dimgray;
 }
-#nickname{
+#nickName{
     border: 1px solid dimgray;
 }
 #emailDomain{
@@ -31,6 +31,6 @@
     border-bottom:  1px solid dimgray;
 }
 #passwordResult{
-    font-size: 8px;
+    font-size: 16px;
     font-weight: lighter;
 }

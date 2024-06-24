@@ -32,7 +32,11 @@ function checkPw(){
 
 function nickValidCheck(){
     event.preventDefault();
-    let nickname = document.getElementById("nickname").value;
+    let nickname = document.getElementById("nickName").value;
+    if(!nickname.trim() || !nickname < 4 || /\s/.test(nickname)){
+        alert("빈 여백 또는 빈 문자열은 사용이 불가능합니다.")
+        return false;
+    }
     fetch("/joinFormNick?nickname=" +nickname , {
         method: "POST",
         headers: {
@@ -42,7 +46,7 @@ function nickValidCheck(){
         .then(response => response.json())
         .then(data => {
             console.log(data);
-            if (data === "suc") {
+            if (data.status === "suc") {
                 nickNameCheck =1;
                 alert("사용 가능한 닉네임입니다.")
 
@@ -124,17 +128,12 @@ function formSubmitCheck(form) {
         return;
     } else if (!form.password.value.trim()) {
         alert("비밀번호를 입력헤주세요")
-        form.pw.focus();
+        form.password.focus();
         submitButton.disabled = false;
         return;
-    } else if (!form.name.value.trim()) {
-        submitButton.disabled = false;
-        alert("이름을 입력해주세요")
-        form.name.focus();
-        return;
-    } else if (!form.nickname.value.trim()) {
-        alert("별명을 입력해주세요");
-        form.nickname.focus();
+    } else if (!form.nickName.value.trim()) {
+        alert("닉네임을 입력해주세요");
+        form.nickName.focus();
         submitButton.disabled = false;
         return;
     } else if (!form.email.value.trim()) {
@@ -143,9 +142,9 @@ function formSubmitCheck(form) {
         submitButton.disabled = false;
         return;
     }
-    if (!form.postcode.value.trim() || !form.address.value.trim() || !form.addressDetail.value.trim()) {
+    if (!form.postCode.value.trim() || !form.address.value.trim() || !form.addressDetail.value.trim()) {
         alert("주소를 입력해주세요");
-        form.postcode.focus();
+        form.postCode.focus();
         return;
     } else if (passwordCheck === 0) {
         alert("비밀번호확인을 입력해주세요");
@@ -162,7 +161,7 @@ function formSubmitCheck(form) {
         submitButton.disabled = false;
         return;
     }
-    let nickValue = document.getElementById("nickname").value;
+    let nickValue = document.getElementById("nickName").value;
     alert(nickValue + "님 회원가입을 축하합니다.");
     form.submit();
 }
@@ -213,7 +212,7 @@ function daumAddress() {
             }*/
         }
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('postcode').value = data.zonecode;
+            document.getElementById('postCode').value = data.zonecode;
             document.getElementById("address").value = addr;
             // 커서를 상세주소 필드로 이동한다.
             document.getElementById("detailAddress").focus();

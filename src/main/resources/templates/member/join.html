@@ -26,7 +26,7 @@
         </div>
         <div class="join-nickname mb-2">
             <p class="text-lg font-bold">닉네임</p>
-            <input type="text" name="nickname" id="nickname"> &nbsp;&nbsp; <button class="btn btn-sm btn-active" onclick="nickValidCheck()">중복체크</button>
+            <input type="text" name="nickName" id="nickName"> &nbsp;&nbsp; <button class="btn btn-sm btn-active" onclick="nickValidCheck()">중복체크</button>
         </div>
         <div class="join-email mb-2">
             <p class="text-lg font-bold">이메일</p>
@@ -46,7 +46,7 @@
         <div class="join-address mb-2">
             <p class="text-lg font-bold">주소</p>
             <div class="input-group">
-            <input type="text" id="postcode" name="postcode" class="mb-2" placeholder="우편번호" disabled>
+            <input type="text" id="postCode" name="postCode" class="mb-2" placeholder="우편번호" disabled>
             <input type="button" class="btn btn-sm btn-outline" onclick="daumAddress()" value="우편번호 찾기"><br>
             <input type="text" id="address" name="address" class="mb-2 w-80" placeholder="주소" disabled><br>
             <input type="text" id="detailAddress" name="addressDetail" class="w-80" placeholder="상세주소">
@@ -64,6 +64,6 @@
     <input type="button" class="btn btn-sm btn-active" value="뒤로가기" onclick="history.back()"/>
 </div>
 </form>
-<script src="/static/js/member/join.js"></script>
+<script src="/js/join.js"></script>
 </body>
 </html>

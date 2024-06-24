@@ -1,11 +1,16 @@
 package com.HotUdon.controller.Front;
 
+import com.HotUdon.config.oauth.PrincipalDetails;
 import com.HotUdon.dto.MemberDTO;
+import com.HotUdon.model.Role;
 import com.HotUdon.service.member.MemberServiceImpl;
 import com.HotUdon.session.SessionConst;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,22 +26,28 @@ public class MemberController {
 
     private final MemberServiceImpl memberService;
 
+    private boolean logincheck(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        if(principalDetails == null){
+            return false;
+        }
+        return true;
+    }
+
     @GetMapping("/join")
-    public String joinForm(HttpSession session, RedirectAttributes redirectAttributes){
+    public String joinForm(HttpSession session,Model model ){
 
         if( session.getAttribute(SessionConst.USER_ID) != null){
-            redirectAttributes.addFlashAttribute("error","잘못된 접근입니다");
             return "index";
 
         }
-
+        model.addAttribute("memberDTO", new MemberDTO());
         return "member/join";
     }
     @PostMapping("/join")
-    public String getJoinForm(RedirectAttributes redirectAttributes, Model model, MemberDTO memberDTO) {
+    public String getJoinForm(Model model, MemberDTO memberDTO) {
         memberService.save(memberDTO);
 
-        redirectAttributes.addFlashAttribute("suc","성공적으로 회원가입이 완료되었습니다");
+      /*  redirectAttributes.addFlashAttribute("suc","성공적으로 회원가입이 완료되었습니다");*/
         return "index";
     }
     @GetMapping("/login")
@@ -45,6 +56,6 @@ public class MemberController {
             redirectAttributes.addFlashAttribute("error","잘못된 접근입니다");
             return "index";
         }
-         return "loginForm";
+         return "member/loginForm";
     }
 }
