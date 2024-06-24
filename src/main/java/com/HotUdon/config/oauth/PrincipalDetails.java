@@ -1,8 +1,7 @@
 package com.HotUdon.config.oauth;
 
 import com.HotUdon.model.Member;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,16 +14,13 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class PrincipalDetails  extends Member implements UserDetails, OAuth2User {
+public class PrincipalDetails   implements UserDetails, OAuth2User {
 
     private Member member;
     private Map<String, Object> attributes;
 
     public PrincipalDetails(Member member) {
         this.member = member;
-    }
-    public static PrincipalDetails create(Member member) {
-        return new PrincipalDetails(member);
     }
 
     public PrincipalDetails(Member member, Map<String, Object> attributes) {
