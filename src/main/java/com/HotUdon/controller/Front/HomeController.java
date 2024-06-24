@@ -21,18 +21,6 @@ public class HomeController {
              System.out.println("Logged in user: " + principalDetails.getUsername());
          } else {
              System.out.println("PrincipalDetails is null");
-         }
-         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-         if (authentication != null) {
-             Object principal = authentication.getPrincipal();
-             if (principal instanceof PrincipalDetails) {
-                 principalDetails = (PrincipalDetails) principal;
-                 System.out.println("Logged in user from SecurityContextHolder: " + principalDetails.getUsername());
-             } else {
-                 System.out.println("Principal is not an instance of PrincipalDetails: " + principal);
-             }
-         } else {
-             System.out.println("No authentication found in SecurityContextHolder");
 
      }
          return "index";

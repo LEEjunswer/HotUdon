@@ -63,7 +63,7 @@ public class SecurityConfig {
                                 )
                 )
                 .logout(logout -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
                         .logoutSuccessUrl("/home")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
@@ -88,6 +88,7 @@ public class SecurityConfig {
                     .passwordEncoder(passwordEncoder());
             return authenticationManagerBuilder.build();
         }
+
     /*이걸 줘야 js로 비동기처리나 다양한걸 가능하다.*/
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

@@ -7,10 +7,10 @@
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
 <div id="login-content">
-    <form action="/login" method="POST" id="join_form" onsubmit="login(event)">
+    <form action="/member/update" method="POST" id="join_form" onsubmit="login(event)">
         <div class="login-id mb-2">
-            <span> 아이디    : </span>  &nbsp;&nbsp;&nbsp;<input type="text" name="loginId" id="loginId">
-            <button type="submit" class="submit-btn btn-active btn-accent" onclick="login()">로그인</button>
+            <span> 아이디    : </span>  &nbsp;&nbsp;&nbsp;<input type="text" name="loginId" th:text="${loginId}" id="loginId" disabled>
+            <button type="submit" class="submit-btn btn-active btn-accent" onclick="login()">수정하기</button>
         </div>
         <div class="login-id mb-2">
             <span> 비밀번호 : </span> <input type="password" name="password" id="password">

@@ -9,6 +9,9 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -25,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MemberController {
 
     private final MemberServiceImpl memberService;
+    private final AuthenticationManager authenticationManager;
 
     private boolean logincheck(@AuthenticationPrincipal PrincipalDetails principalDetails){
         if(principalDetails == null){
@@ -58,14 +62,33 @@ public class MemberController {
         }
          return "member/loginForm";
     }
-    @GetMapping("/member/update")
-    public String updateForm(Model model,@AuthenticationPrincipal PrincipalDetails principalDetails){
+    @GetMapping("/update")
+    public String update(Model model,@AuthenticationPrincipal PrincipalDetails principalDetails){
         if(!logincheck(principalDetails)){
             return "member/loginForm";
         }
         Long getId = principalDetails.getMember().getId();
-        MemberDTO memberDTO =memberService.findById(getId);
-        model.addAttribute("member",memberDTO);
-        return "member/updateForm";
+        MemberDTO memberDTO = memberService.findById(getId);
+        model.addAttribute("loginId",memberDTO.getLoginId());
+        return "member/update";
     }
+    @PostMapping("/update")
+    public String updateForm(Model model,MemberDTO memberDTO,@AuthenticationPrincipal PrincipalDetails principalDetails){
+        if(!logincheck(principalDetails)){
+            return "member/loginForm";
+        }
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(memberDTO.getLoginId(), memberDTO.getPassword()));
+        if (authentication.isAuthenticated()) {
+            Long getId = principalDetails.getMember().getId();
+            MemberDTO mv = memberService.findById(getId);
+            model.addAttribute("vo", mv);
+
+            return "member/updateForm";
+        }
+        Long getId = principalDetails.getMember().getId();
+        MemberDTO mv = memberService.findById(getId);
+        model.addAttribute("loginId" , mv.getLoginId());
+        return "redirect:/member/update";
+    }
+
 }

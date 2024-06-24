@@ -1,6 +1,6 @@
 function logout(){
     fetch("/logout", {
-        method: "GET"
+        method: "POST"
     })
         .then(response => {
             if (response.ok) {
