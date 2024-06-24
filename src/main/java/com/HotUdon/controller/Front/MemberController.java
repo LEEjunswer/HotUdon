@@ -58,4 +58,14 @@ public class MemberController {
         }
          return "member/loginForm";
     }
+    @GetMapping("/member/update")
+    public String updateForm(Model model,@AuthenticationPrincipal PrincipalDetails principalDetails){
+        if(!logincheck(principalDetails)){
+            return "member/loginForm";
+        }
+        Long getId = principalDetails.getMember().getId();
+        MemberDTO memberDTO =memberService.findById(getId);
+        model.addAttribute("member",memberDTO);
+        return "member/updateForm";
+    }
 }
