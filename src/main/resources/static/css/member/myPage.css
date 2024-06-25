@@ -1,0 +1,70 @@
+#item-center{
+    display: flex;
+    margin-top: 2px;
+    padding: 0px 15px 28px;
+}
+.center-button {
+    flex: 1 1 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    appearance: none;
+    font-family: inherit;
+    font-size: inherit;
+    border: 0px;
+    cursor: pointer;
+    background: none;
+    line-height: 1.5;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+.myPage-line{
+    width: 90%;
+    margin: 20px 0;
+    height: 2px;
+    background-color: dimgray;
+    border: none;
+}
+.parent {
+    display: flex;
+    justify-content: center;
+}
+.item-profile {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.myPage-nickname{
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+.nickname-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: currentcolor;
+    line-height: 27px;
+}
+#item-content {
+    width: 100%;
+    padding: 8px 15px 16px;
+}
+.myPage-name {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgb(110, 110, 110);
+    line-height: 18px;
+}
+.myPage-number {
+    font-size: 14px;
+    font-weight: 400;
+    color: currentcolor;
+    line-height: 22px;
+}
+.user-grade{
+    margin-left: auto;
+}

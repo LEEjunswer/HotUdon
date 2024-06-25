@@ -1,19 +1,19 @@
     package com.HotUdon.model;
 
     import jakarta.persistence.*;
-    import lombok.AllArgsConstructor;
-    import lombok.Data;
-    import lombok.NoArgsConstructor;
+    import lombok.*;
     import org.hibernate.annotations.Comment;
 
     @Entity
-    @Data
+    @Getter
+    @Setter
+    @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public class ChatMessage {
 
         @Id
-        @GeneratedValue
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "message_id", nullable = false)
         private Long id;
 

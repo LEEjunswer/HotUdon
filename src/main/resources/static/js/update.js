@@ -121,22 +121,9 @@ function formSubmitCheck(form) {
     submitButton.disabled = true;
     form.email.value = emailId.value + "@" + emailDomain.value;
     let emailCheck = form.email.value;
-    if (!form.loginId.value.trim()) {
-        alert("아이디를 입력해주세요");
-        form.loginId.focus();
-        submitButton.disabled = false;
-        return;
-    } else if (!form.password.value.trim()) {
-        alert("비밀번호를 입력헤주세요")
-        form.password.focus();
-        submitButton.disabled = false;
-        return;
-    } else if (!form.nickName.value.trim()) {
-        alert("닉네임을 입력해주세요");
-        form.nickName.focus();
-        submitButton.disabled = false;
-        return;
-    } else if (!form.email.value.trim()) {
+
+
+    if (!form.email.value.trim()) {
         alert("이메일을 입력해주세요");
         form.email.focus();
         submitButton.disabled = false;
@@ -146,17 +133,14 @@ function formSubmitCheck(form) {
         alert("주소를 입력해주세요");
         form.postCode.focus();
         return;
-    } else if (passwordCheck === 0) {
-        alert("비밀번호확인을 입력해주세요");
-        submitButton.disabled = false;
-        return;
+
     } else if (!isValidEmail(emailCheck)) {
         alert("이메일 형식이 아닙니다. 다시 확인해주세요");
         submitButton.disabled = false;
         return;
     }
     /* emailCheck ===0  나중에 이메일 중보게크랑 인증번호 보내고 할 예정 */
-    else if (idCheck === 0 || nickNameCheck === 0) {
+    else if (nickNameCheck === 0) {
         alert("아이디 or 닉네임 중복체크를 해주세요");
         submitButton.disabled = false;
         return;

@@ -16,6 +16,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
@@ -41,10 +43,10 @@ public class SecurityConfig {
         LoginIdAndPasswordFilter customFilter = new LoginIdAndPasswordFilter(authenticationManager(http));
         customFilter.setFilterProcessesUrl("/login");// 로그인 처리 URL 설정
         http
-                .csrf(AbstractHttpConfigurer::disable) // 이걸 줘야지 json 처리 가능하다.
+                .csrf(AbstractHttpConfigurer::disable) // 이걸 줘야지 json 처리 가능하다 보안이 좀 안좋아진다는데 좀 알아봐야겠다.
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/", "/home", "/member/join", "/member/login", "/joinFormId", "/joinFormNick", "/css/**", "/js/**").permitAll()
+                                .requestMatchers("/", "/home", "/member/join", "/member/login", "/joinFormId", "/joinFormNick", "/css/**", "/js/**","/logo/**", "/oauth2/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin ->
@@ -61,6 +63,7 @@ public class SecurityConfig {
                                         userInfoEndpoint
                                                 .userService(oAuth2UserService)
                                 )
+                                .successHandler(successHandler())
                 )
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
@@ -78,6 +81,10 @@ public class SecurityConfig {
         return http.build();
     }
 
+    @Bean
+    public AuthenticationSuccessHandler successHandler() {
+        return new SimpleUrlAuthenticationSuccessHandler("/home");
+    }
         @Bean
         public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
             System.out.println("http authMangerCheck= " + http);

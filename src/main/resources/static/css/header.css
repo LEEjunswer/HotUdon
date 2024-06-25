@@ -15,10 +15,15 @@
 }
 .search-container {
     flex: 2;
+    margin-left: 80px;
     display: flex;
     justify-content: center;
 }
-
+#header-line{
+    height: 3px;
+    width: 100%;
+    color: dimgray;
+}
 .actions {
     flex: 1;
     display: flex;

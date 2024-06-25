@@ -2,10 +2,7 @@ package com.HotUdon.dto;
 
 import com.HotUdon.model.Role;
 import jakarta.persistence.Column;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import java.time.LocalDateTime;
@@ -15,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class MemberDTO {
 
     private Long id;
@@ -42,11 +40,13 @@ public class MemberDTO {
 
     private Boolean dormantAccount;
 
-    private String Status;
+    private String email;
+
+    private int Status;
 
     private int cash;
 
     private Role role;
 
-    private String grade;
+    private int grade;
 }

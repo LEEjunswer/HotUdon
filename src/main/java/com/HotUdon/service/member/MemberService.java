@@ -8,4 +8,5 @@ public interface MemberService {
     MemberDTO findById(Long id);
     MemberDTO findByLoginId (String id);
     MemberDTO findByNickname(String nickName);
+    void updateMember(Long id, MemberDTO memberDTO);
 }

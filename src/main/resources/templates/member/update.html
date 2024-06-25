@@ -5,11 +5,17 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="~{fragments/header :: header}"></div>
+<div id="loginHeader" class="navbar bg-base-100">
+    <a href="javascript:void(0);" onclick="window.history.back();" class="back-button text-2xl font-bold"> < </a>
+    <div id="login-container">
+        <span class="text-2xl font-bold">회원수정</span>
+    </div>
+</div>
+<hr class="login-line">
 <div id="login-content">
     <form action="/member/update" method="POST" id="join_form" onsubmit="login(event)">
         <div class="login-id mb-2">
-            <span> 아이디    : </span>  &nbsp;&nbsp;&nbsp;<input type="text" name="loginId" th:text="${loginId}" id="loginId" disabled>
+            <span> 아이디    : </span>  &nbsp;&nbsp;&nbsp;<input type="text" name="loginId" th:value="${member.loginId}" id="loginId" readonly>
             <button type="submit" class="submit-btn btn-active btn-accent" onclick="login()">수정하기</button>
         </div>
         <div class="login-id mb-2">

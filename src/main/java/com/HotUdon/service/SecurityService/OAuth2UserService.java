@@ -1,5 +1,6 @@
 package com.HotUdon.service.SecurityService;
 
+import com.HotUdon.config.oauth.PrincipalDetails;
 import com.HotUdon.model.Member;
 import com.HotUdon.model.Role;
 import com.HotUdon.repository.MemberRepository;
@@ -24,14 +25,15 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        System.out.println("OAuth2UserService 진입체크");
         OAuth2User oAuth2User = super.loadUser(userRequest);
-
-        // 카카오 사용자 정보를 가져오기
+        System.out.println("진입체크");
         Map<String, Object> attributes = oAuth2User.getAttributes();
-        String loginId = String.valueOf(attributes.get("id"));
-
+        System.out.println("Api 로그인 attributes = " + attributes);
+        Map<String, Object> response = castToMap(attributes.get("response"));
+        String loginId = String.valueOf(response.get("email"));
+        String nickname = String.valueOf(response.get("nickname"));
         Map<String, Object> properties = castToMap(attributes.get("properties"));
-        String nickname = properties != null ? String.valueOf(properties.get("nickname")) : "";
 
         // 사용자 정보를 매핑하는 로직 추가
         Optional<Member> memberOptional = memberRepository.findByLoginId(loginId);
@@ -50,10 +52,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
         Set<GrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_" + member.getRole().name()));
 
-        return new DefaultOAuth2User(
-                authorities,
-                attributes,
-                "id");
+        return new PrincipalDetails(member, attributes);
     }
 
     @SuppressWarnings("unchecked")

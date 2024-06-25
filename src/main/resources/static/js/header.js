@@ -1,3 +1,7 @@
+function backHome(){
+    window.location.href="/home";
+}
+
 function logout(){
     fetch("/logout", {
         method: "POST"

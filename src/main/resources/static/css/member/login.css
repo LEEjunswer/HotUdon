@@ -27,7 +27,90 @@
 }
 #error-message {
     display: flex;
-    align-items: center;
+    justify-content: center;
     margin-top: 10px;
     color: red;
+}
+.simpleLogin-container{
+    text-align: center;
+    width: 100%;
+}
+.simpleLogin-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    margin-top: 10px;
+}
+.login-center {
+    height: 3px;
+    background-color: dimgray;
+    border: none;
+    flex-grow: 1;
+    margin: 10px;
+}
+.login-text {
+    padding: 0 10px;
+    white-space: nowrap;
+}
+#buttongroup{
+    width: 80%;
+}
+#googlebtn{
+    background-color: #4285F4;
+    border: none;
+    color: white;
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom:  10px;
+}
+#googlebtn i {
+    font-size: 24px;
+    color: white;
+}
+
+
+#naverbtn {
+    background-color: #1EC800;
+    border: none;
+    color: white;
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom:  10px;
+}
+#naverbtn i {
+    font-size: 24px;
+    color: white;
+}
+
+/* Kakao 버튼 스타일 */
+#kakaobtn {
+    background-color: #FFEB00;
+    border: none;
+    color: black;
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom:  10px;
+}
+#kakaobtn i {
+    font-size: 24px;
+    color: black;
 }

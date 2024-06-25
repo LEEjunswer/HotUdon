@@ -48,7 +48,8 @@ public class MemberController {
         return "member/join";
     }
     @PostMapping("/join")
-    public String getJoinForm(Model model, MemberDTO memberDTO) {
+    public String getJoinForm(MemberDTO memberDTO) {
+        System.out.println("memberDTO = " + memberDTO);
         memberService.save(memberDTO);
 
       /*  redirectAttributes.addFlashAttribute("suc","성공적으로 회원가입이 완료되었습니다");*/
@@ -67,9 +68,10 @@ public class MemberController {
         if(!logincheck(principalDetails)){
             return "member/loginForm";
         }
-        Long getId = principalDetails.getMember().getId();
+            Long getId = principalDetails.getMember().getId();
         MemberDTO memberDTO = memberService.findById(getId);
-        model.addAttribute("loginId",memberDTO.getLoginId());
+        System.out.println("memberDTO = " + memberDTO);
+        model.addAttribute("member",memberDTO);
         return "member/update";
     }
     @PostMapping("/update")
@@ -89,6 +91,22 @@ public class MemberController {
         MemberDTO mv = memberService.findById(getId);
         model.addAttribute("loginId" , mv.getLoginId());
         return "redirect:/member/update";
+    }
+    @PostMapping("/change")
+    public  String change(@AuthenticationPrincipal PrincipalDetails principalDetails,MemberDTO memberDTO){
+            if(!logincheck(principalDetails)){
+            return "member/loginForm";
+            }
+        Long id = principalDetails.getMember().getId();
+        memberService.updateMember(id,memberDTO);
+        return "redirect:/home";
+    }
+    @GetMapping("/myPage")
+    public String myPage(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        if(!logincheck(principalDetails)){
+            return "member/loginForm";
+        }
+        return "member/myPage";
     }
 
 }
