@@ -1,4 +1,4 @@
-package com.HotUdon.repository;
+package com.HotUdon.repository.member;
 
 import com.HotUdon.model.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

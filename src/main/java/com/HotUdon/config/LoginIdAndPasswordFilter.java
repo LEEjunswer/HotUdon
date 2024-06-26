@@ -23,7 +23,6 @@ public class LoginIdAndPasswordFilter extends UsernamePasswordAuthenticationFilt
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         String loginId = request.getParameter("loginId");
         String password = request.getParameter("password");
-        System.out.println("Attempting authentication with loginId: " + loginId + " and password: " + password);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginId, password);
         return authenticationManager.authenticate(authenticationToken);
     }

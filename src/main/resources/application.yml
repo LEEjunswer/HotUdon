@@ -87,6 +87,6 @@ logging:
 
 profile:
   upload:
-    path: src/main/resources/static/profile
+    path: ${UPLOAD_PROFILE}
 upload:
-  path: src/main/resources/static/product
+  path: ${UPLOAD_PATH}

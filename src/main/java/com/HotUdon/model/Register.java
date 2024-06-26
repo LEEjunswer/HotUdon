@@ -7,6 +7,9 @@ import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.Fetch;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -42,6 +45,9 @@ public class Register {
     @Comment("상품거래방식")
     private String productMethod;
 
+    @Comment("옥션인가? 일반판매인가?")
+    private boolean auctionCheck;
+
     //판매자 회원
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id", foreignKey = @ForeignKey(name = "new_register_fk_seller"))
@@ -50,5 +56,8 @@ public class Register {
     //옥션은 isAuction 이 true일떄만 적용이 된다;
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "register", cascade = CascadeType.ALL)
     private Auction auction;
+
+    @OneToMany(mappedBy = "register", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FileUpload> files = new ArrayList<>();
 
 }

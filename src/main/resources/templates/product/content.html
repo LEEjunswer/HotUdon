@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head :: head}">
+<head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>$Title$</title>
 </head>
 <body>
-<div th:replace="~{fragments/header :: header}"></div>
 <div id="productForm-content">
     <div id="login-container">
-        <span class="text-2xl font-bold">상품등록</span>
+        <span class="text-2xl font-bold">일반 판매</span>
         <a href="/home" class="text-2xl font-bold close">X</a>
     </div>
     <div class="parent">
         <div class="myPage-line"></div>
     </div>
 
-    <form action="/register/addProduct" method="Post" enctype="multipart/form-data">
+    <form action="/product/register" method="Post" enctype="multipart/form-data">
         <div id="fileUpload-img">
             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 40 40" fill="none" stroke-linecap="round" stroke-linejoin="round" id="upload-icon" style="cursor: pointer;">
                 <rect width="40" height="40" fill="#cccccc"/>
@@ -23,19 +22,13 @@
                 <text id="fileUpload-cnt" x="20" y="38" font-size="10" fill="#000000" text-anchor="middle">0/3</text>
             </svg>
             <div id="image-preview"></div>
-        <input type="file" id="file-input" name="imageFiles" style="display:none;" multiple accept="image/*">
+            <input type="file" id="file-input" style="display:none;" multiple accept="image/*">
         </div>
         <div id="product-title" class="add-product">
-        <input type="text" name="title" id="title" placeholder="상품명"> &nbsp;&nbsp;
-        </div>
-        <div id="radio-option" class="add-product">
-            <input type="radio" id="normalSale" name="auctionCheck" value="false" checked>
-            <label for="normalSale">일반 판매</label>
-            &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="auction" name="auctionCheck" value="true">
-            <label for="auction">경매</label>
+            <input type="text" name="title" id="title" > &nbsp;&nbsp;
         </div>
         <div id="product-price" class="add-product">
-    <input type="number" name="price" id="price" placeholder="상품가격" min="1000" max="100000000000"> &nbsp;&nbsp; <span>￦</span>
+            <input type="number" name="price" id="price"  min="1000" max="100000000000"> &nbsp;&nbsp; <span>￦</span>
         </div>
         <div class="add-product">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin-filled" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -48,16 +41,14 @@
             <p class="product-info">설명</p>
         </div>
         <div id="product-info" class="add-product">
-            <textarea  name="info" id="info" placeholder="브랜드, 모델명, 구매시기, 하자 유무 등 상품 설명을 최대한 자세히 적어주세요.
-전화번호, SNS 계정 등 개인정보입력은 제한될 수 있습니다."></textarea>
+            <textarea  name="info" id="info" ></textarea>
         </div>
         <div id="product-button">
-        <button id="product_submit" onclick="formSubmitProduct(form)" type="button" class="btn btn-success btn-xs sm:btn-sm md:btn-md lg:btn-lg">상품등록</button>
+            <button id="product_submit" onclick="formSubmitProduct()" type="button" class="btn btn-success btn-xs sm:btn-sm md:btn-md lg:btn-lg">상품구매</button>
         </div>
     </form>
-    </div>
+</div>
 
 <footer th:replace="~{fragments/footer :: footer}"></footer>
-<script src="/static/js/addProduct.js"></script>
 </body>
 </html>

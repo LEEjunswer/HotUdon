@@ -1,14 +1,13 @@
 package com.HotUdon.service.member;
 
 import com.HotUdon.dto.MemberDTO;
+import com.HotUdon.mapper.MemberMapper;
 import com.HotUdon.model.Member;
 import com.HotUdon.model.Role;
-import com.HotUdon.repository.MemberRepository;
+import com.HotUdon.repository.member.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,11 +26,11 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public MemberDTO findByLoginIdAndPassword(String loginId, String password) {
              Member member  = memberRepository.findByLoginIdAndPassword(loginId,password);
-        return mapEntityToDTO(member);
+        return MemberMapper.mapEntityToDTO(member);
     }
 
         @Override
-        public int save(MemberDTO memberDTO) {
+        public void save(MemberDTO memberDTO) {
             System.out.println("memberDTOService = " + memberDTO);
             Member member = Member.builder()
                     .loginId(memberDTO.getLoginId())
@@ -47,7 +46,6 @@ public class MemberServiceImpl implements MemberService{
                     .build();
             memberRepository.save(member);
             Long memberId = member.getId();
-            return memberId != null ? memberId.intValue() : 0;
         }
 
 
@@ -56,7 +54,7 @@ public class MemberServiceImpl implements MemberService{
         Optional<Member>  memberOptional  = memberRepository.findByLoginId(id);
         if (memberOptional.isPresent()) {
             Member member = memberOptional.get();
-            return mapEntityToDTO(member);
+            return MemberMapper.mapEntityToDTO(member);
         } else {
             return null;
         }
@@ -66,7 +64,7 @@ public class MemberServiceImpl implements MemberService{
         Optional<Member> memberOptional  = memberRepository.findByNickName(nick);
         if(memberOptional.isPresent()){
             Member member = memberOptional.get();
-            return mapEntityToDTO(member);
+            return MemberMapper.mapEntityToDTO(member);
         }else {
             return null;
         }
@@ -98,48 +96,10 @@ public class MemberServiceImpl implements MemberService{
        if(memberOptional.isPresent()){
            Member member = memberOptional.get();
            System.out.println("memberService = " + member);
-          return mapEntityToDTO(member);
+          return MemberMapper.mapEntityToDTO(member);
        }
         throw new EntityNotFoundException("Member not found with id: " + id);
     }
 
-    private MemberDTO mapEntityToDTO(Member member){
-        MemberDTO  memberDTO = new MemberDTO();
-        memberDTO.setId(member.getId());
-        memberDTO.setCash(member.getCash());
-        memberDTO.setGrade(member.getGrade());
-        memberDTO.setPostCode(member.getPostCode());
-        memberDTO.setAddress(member.getAddress());
-        memberDTO.setAddressDetail(member.getAddressDetail());
-        memberDTO.setPhone(member.getPhone());
-        memberDTO.setPoint(member.getPoint());
-        memberDTO.setPassword(member.getPassword());
-        memberDTO.setDormantAccount(member.getDormantAccount());
-        memberDTO.setLoginId(member.getLoginId());
-        memberDTO.setLoginDay(member.getLoginDay());
-        memberDTO.setNickName(member.getNickName());
-        memberDTO.setStatus(member.getStatus());
-        memberDTO.setRegDate(member.getRegDate());
-        memberDTO.setEmail(member.getEmail());
-        return memberDTO;
-    }
-    private Member mapDTOToEntity(MemberDTO memberDTO){
-        Member member = new Member();
-        member.setId(memberDTO.getId());
-        member.setLoginId(memberDTO.getLoginId());
-        member.setPassword(memberDTO.getPassword());
-        member.setGrade(memberDTO.getGrade());
-        member.setCash(memberDTO.getCash());
-        member.setPostCode(memberDTO.getPostCode());
-        member.setAddress(memberDTO.getAddress());
-        member.setAddressDetail(memberDTO.getAddressDetail());
-        member.setPhone(memberDTO.getPhone());
-        member.setPoint(memberDTO.getPoint());
-        member.setNickName(memberDTO.getNickName());
-        member.setStatus(memberDTO.getStatus());
-        member.setRegDate(memberDTO.getRegDate());
-        member.setDormantAccount(memberDTO.getDormantAccount());
-        member.setEmail(memberDTO.getEmail());
-        return  member;
-    }
+
 }

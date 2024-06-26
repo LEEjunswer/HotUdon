@@ -6,7 +6,6 @@ const submitButton = document.getElementById('join_submit');
 let passwordStyle = document.getElementById('password');
 let passwordConfirmStyle= document.getElementById('passwordCheck');
 const passwordResult = document.getElementById('passwordResult');
-let idCheck = 0;
 let nickNameCheck = 0;
 let passwordCheck = 0;
 
@@ -68,43 +67,6 @@ function isValidEmail(email) {
     return emailPattern.test(email);
 }
 
-function  idValidCheck() {
-    event.preventDefault();
-    const loginId = document.getElementById("loginId").value;
-    const koreanPattern = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-    const spacePattern = /\s/;
-    if(koreanPattern.test(loginId) || spacePattern.test(loginId) ){
-        alert("아이디는 한글을 포함 또는 공백을 사용하실 수 없습니다.");
-        return;
-    }
-    if (loginId.length < 6 || loginId.length > 20) {
-        alert("아이디는 6글자 이상 20글자 이하로 설정해야 합니다.");
-        return;
-    }
-
-    fetch("/joinFormId?loginId=" +loginId, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    })
-        .then(response => response.json())
-        .then(data => {
-               console.log(data.status);
-            if (data.status ==="suc") {
-                idCheck =1;
-                alert("사용 가능한 아이디입니다.")
-
-            } else {
-                idCheck = 0;
-                alert("이미 사용중인 아이디입니다")
-            }
-        })
-        .catch(error => {
-            console.error("오류 발생:", error);
-        });
-}
-
 function emailSelect() {
     if (selectElement.value.trim() === "") {
         emailDomain.style.display = 'inline';
@@ -139,9 +101,8 @@ function formSubmitCheck(form) {
         submitButton.disabled = false;
         return;
     }
-    /* emailCheck ===0  나중에 이메일 중보게크랑 인증번호 보내고 할 예정 */
     else if (nickNameCheck === 0) {
-        alert("아이디 or 닉네임 중복체크를 해주세요");
+        alert("닉네임 중복체크를 해주세요");
         submitButton.disabled = false;
         return;
     }

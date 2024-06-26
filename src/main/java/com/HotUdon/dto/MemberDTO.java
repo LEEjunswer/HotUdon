@@ -25,7 +25,6 @@ public class MemberDTO {
 
     private String phone;
 
-
     private int postCode;
 
     private String address;
@@ -49,4 +48,6 @@ public class MemberDTO {
     private Role role;
 
     private int grade;
+
+    private String profileImg;
 }

@@ -73,6 +73,9 @@ public class Member {
     @Comment("고객 등급") // Enum or String or int 고민중
     private int grade;
 
+    @Comment("멤버 프로필이미지")
+    private String profileImg;
+
     @PrePersist
     protected void onCreate() {
         LocalDateTime dateTime = LocalDateTime.now();
