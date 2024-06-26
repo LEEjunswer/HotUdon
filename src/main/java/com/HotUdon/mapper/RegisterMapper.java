@@ -10,6 +10,7 @@ public class RegisterMapper {
             return  null;
         }
         RegisterDTO registerDTO = new RegisterDTO();
+        registerDTO.setId(register.getId());
         registerDTO.setPowerRegister(register.getPowerRegister());
         registerDTO.setInfo(register.getInfo());
         registerDTO.setPrice(register.getPrice());
@@ -26,6 +27,7 @@ public class RegisterMapper {
              return  null;
         }
         Register register = new Register();
+        register.setId(registerDTO.getId());
         register.setPowerRegister(registerDTO.getPowerRegister());
         register.setInfo(registerDTO.getInfo());
         register.setPrice(registerDTO.getPrice());

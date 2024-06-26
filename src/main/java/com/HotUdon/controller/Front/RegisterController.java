@@ -49,6 +49,7 @@ public class RegisterController {
         }
         Member member = principalDetails.getMember();
        Long content = registerService.save(registerDTO,member);
+       registerDTO.setId(content);
        if(multipartFiles != null) {
            fileUploadService.saveFiles(multipartFiles, registerDTO);
        }
