@@ -16,7 +16,13 @@ public class NotificationDTO {
 
     private Long id;
 
-    private MemberDTO memberDTO; //유저에게 알람
+    private String content;
+
+    private boolean isDibs;
+
+    private String regDate;
+
+    private Long memberId; //유저에게 알람
  
-    private ChatRoomDTO chatRoomDTO; //채팅룸이나 메시지가 생성됐을 떄 시작
+    private Long registerId; //채팅룸이나 메시지가 생성됐을 떄 시작
 }

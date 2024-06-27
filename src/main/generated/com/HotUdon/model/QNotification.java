@@ -26,7 +26,11 @@ public class QNotification extends EntityPathBase<Notification> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final BooleanPath isDibs = createBoolean("isDibs");
+
     public final QMember member;
+
+    public final StringPath regDate = createString("regDate");
 
     public final QRegister register;
 

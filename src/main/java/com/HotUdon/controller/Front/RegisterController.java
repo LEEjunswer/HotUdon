@@ -10,7 +10,10 @@ import com.HotUdon.service.register.RegisterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.Page;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +29,7 @@ public class RegisterController {
 
     private final RegisterService registerService;
     private final FileUploadService fileUploadService;
+/*    private final */
 
     private boolean logincheck(@AuthenticationPrincipal PrincipalDetails principalDetails){
         if(principalDetails == null){
@@ -61,9 +65,16 @@ public class RegisterController {
     @GetMapping("/search")
     public String search(@RequestParam String search,Model model, @RequestParam(defaultValue = "0") int page,
                          @RequestParam(defaultValue = "10") int size){
+        /*이걸 준 이유는 @AuthenticationPrincipal PrincipalDetails principalDetails 사용할 경우 로그인을 해야지 이용이 가능하다..*/
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Page<RegisterDTO>  registerDTOPages=registerService.findBySearchProduct(search,page,size);
-        System.out.println("registerDTOPages.toString() = " + registerDTOPages.toString());
         model.addAttribute("products",registerDTOPages);
+        if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            Member member = principalDetails.getMember();
+            model.addAttribute("m",member);
+            return "product/sellList";
+        }
         return "product/sellList";
     }
     @GetMapping("/content/{id}")

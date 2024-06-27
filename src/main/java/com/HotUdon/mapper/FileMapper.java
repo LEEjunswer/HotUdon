@@ -28,7 +28,7 @@ public class FileMapper {
         fileUpload.setId(fileUploadDTO.getId());
         fileUpload.setFileName(fileUploadDTO.getFileName());
         fileUpload.setFilePath(fileUploadDTO.getFilePath());
-        fileUpload.setRegister(register); // Set the register directly to avoid recursion
+        fileUpload.setRegister(register);
         return fileUpload;
     }
 

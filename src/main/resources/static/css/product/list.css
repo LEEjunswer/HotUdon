@@ -14,6 +14,7 @@
 }
 .custom-card{
     margin-top: 10px;
+    width: 100%;
 }
 .card-title {
     margin-bottom: 0.5rem;
@@ -23,11 +24,14 @@
 }
 .card-actions {
     position: absolute;
-    bottom: 20px;
+    top: 10px;
     right: 10px;
 }
 .figure-img img{
     width: 204px;
     height: 128px;
     object-fit: contain;
+}
+#dummyMember{
+    display: none;
 }
