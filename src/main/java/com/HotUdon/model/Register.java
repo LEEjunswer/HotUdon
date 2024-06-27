@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 
 import lombok.*;
 import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.Fetch;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +48,8 @@ public class Register {
     @Comment("옥션인가? 일반판매인가?")
     private boolean auctionCheck;
 
+    @Comment("올린 날짜")
+    private LocalDateTime regDate;
     //판매자 회원
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id", foreignKey = @ForeignKey(name = "new_register_fk_seller"))
@@ -58,6 +60,6 @@ public class Register {
     private Auction auction;
 
     @OneToMany(mappedBy = "register", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FileUpload> files = new ArrayList<>();
+    private  List<FileUpload> files = new ArrayList<>();
 
 }

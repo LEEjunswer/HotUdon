@@ -17,5 +17,5 @@ public class FileUploadDTO {
     private String filePath;
 
 
-    private RegisterDTO registerDTO;
+    private Long registerId;
 }

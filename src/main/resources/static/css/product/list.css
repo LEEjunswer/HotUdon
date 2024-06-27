@@ -1,0 +1,33 @@
+#product-content{
+    width: 100%;
+    min-height: 600px;
+    overflow-y: auto;
+}
+.seller_location{
+  color: darkgray;
+ font-size: 10px;
+}
+.card-body {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    position: relative;
+}
+.custom-card{
+    margin-top: 10px;
+}
+.card-title {
+    margin-bottom: 0.5rem;
+}
+.card-body p {
+    margin: 0.25rem 0;
+}
+.card-actions {
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+}
+.figure-img img{
+    width: 204px;
+    height: 128px;
+    object-fit: contain;
+}

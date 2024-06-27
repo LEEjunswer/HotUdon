@@ -1,3 +1,9 @@
+//추가
+buildscript {
+	ext {
+		queryDslVersion = "5.0.0"
+	}
+}
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.4'
@@ -25,9 +31,7 @@ configurations {
 repositories {
 	mavenCentral()
 }
-
 dependencies {
-
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -36,26 +40,49 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	implementation group: 'org.json', name: 'json', version: '20240303'
 	implementation 'org.glassfish.jaxb:jaxb-runtime:3.0.2'
-//	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	// developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// QueryDSL 추가
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.4'
 
-		/*이메일 인증*/
+	// 이메일 인증
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	/*스프링 시큐리티 oauth2*/
+	// 스프링 시큐리티 oauth2
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-	/*밑에게 있어야 타임리프에서 Oauth2를 사용 가능하다*/
+	// 밑에게 있어야 타임리프에서 Oauth2를 사용 가능하다
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	implementation 'org.springframework.security:spring-security-oauth2-jose'
 	testImplementation("org.junit.platform:junit-platform-launcher:1.5.2")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
-	//밑에는 로그체크 자바서블렛
-	compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
+
+	// 로그체크 및 서블릿 관련
+	compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+}
+// Querydsl 설정부
+def generated = 'src/main/generated'
+
+// querydsl QClass 파일 생성 위치를 지정
+tasks.withType(JavaCompile) {
+	options.getGeneratedSourceOutputDirectory().set(file(generated))
 }
 
+// java source set 에 querydsl QClass 위치 추가
+sourceSets {
+	main.java.srcDirs += [ generated ]
+}
+
+// gradle clean 시에 QClass 디렉토리 삭제
+clean {
+	delete file(generated)
+}
 tasks.named('test') {
 	useJUnitPlatform()
 }

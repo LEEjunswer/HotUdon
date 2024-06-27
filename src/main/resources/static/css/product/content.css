@@ -1,0 +1,25 @@
+.auto-resize-input {
+    display: inline-block;
+    font-size: 1rem;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 20px;
+}
+.heart-icon{
+    margin-left: 10px;
+}
+.message-button{
+    display: flex;
+    align-items: center;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.message-button svg {
+    margin-right: 8px;
+}

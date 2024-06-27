@@ -1,8 +1,9 @@
 package com.HotUdon.model;
 
 
-import jakarta.persistence.*;
 import lombok.*;
+
+import jakarta.persistence.*;
 
 @Entity
 @Getter

@@ -1,5 +1,6 @@
 package com.HotUdon.controller.Front;
 
+import com.HotUdon.dto.FileUploadDTO;
 import com.HotUdon.service.file.FileUploadService;
 import com.HotUdon.util.AddressParser;
 import com.HotUdon.config.oauth.PrincipalDetails;
@@ -7,6 +8,8 @@ import com.HotUdon.dto.RegisterDTO;
 import com.HotUdon.model.Member;
 import com.HotUdon.service.register.RegisterService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,19 +54,24 @@ public class RegisterController {
        Long content = registerService.save(registerDTO,member);
        registerDTO.setId(content);
        if(multipartFiles != null) {
-           fileUploadService.saveFiles(multipartFiles, registerDTO);
+           fileUploadService.saveFiles(multipartFiles, registerDTO,member.getLoginId());
        }
-        return "redirect:/product/content?"+content;
+        return "redirect:/product/content/"+content;
+    }
+    @GetMapping("/search")
+    public String search(@RequestParam String search,Model model, @RequestParam(defaultValue = "0") int page,
+                         @RequestParam(defaultValue = "10") int size){
+        Page<RegisterDTO>  registerDTOPages=registerService.findBySearchProduct(search,page,size);
+        System.out.println("registerDTOPages.toString() = " + registerDTOPages.toString());
+        model.addAttribute("products",registerDTOPages);
+        return "product/sellList";
     }
     @GetMapping("/content/{id}")
-    public String content(@PathVariable("id")Long id, Model model,@AuthenticationPrincipal PrincipalDetails principalDetails){
+    public String content(@PathVariable("id")Long id, Model model){
       RegisterDTO registerDTO = registerService.findById(id);
-        if(logincheck(principalDetails)){
-         Member member = principalDetails.getMember();
-        model.addAttribute("m",member);
-        model.addAttribute("product",registerDTO);
-            return "product/content";
-        }
+        System.out.println("registerDTO.getFiles() = " + registerDTO.getFiles());
+      List<FileUploadDTO> fileUploadDTOList = fileUploadService.findAllByRegisterId(registerDTO.getId());
+        model.addAttribute("files",fileUploadDTOList);
         model.addAttribute("product",registerDTO);
         return "product/content";
     }

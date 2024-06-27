@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface FileUploadService {
-    FileUploadDTO saveFile(MultipartFile file, RegisterDTO registerDTO) throws IOException;
-    List<FileUploadDTO> saveFiles(List<MultipartFile> files, RegisterDTO registerDTO) throws IOException;
+    FileUploadDTO saveFile(MultipartFile file, RegisterDTO registerDTO,String loginId) throws IOException;
+    List<FileUploadDTO> saveFiles(List<MultipartFile> files, RegisterDTO registerDTO,String loginId) throws IOException;
+    List<FileUploadDTO> findAllByRegisterId(Long registerId);
 }

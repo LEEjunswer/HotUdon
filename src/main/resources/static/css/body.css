@@ -55,3 +55,14 @@ footer {
     font-size: 12px;
     font-weight: bold;
 }
+
+.content-footer {
+    background-color: dimgray;
+    display: flex;
+    height: 60px;
+    width: 100%;
+    box-sizing: border-box;
+    font-weight: bold;
+    gap: 20px;
+    align-items: center;
+}

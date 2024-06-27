@@ -46,7 +46,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // 이걸 줘야지 json 처리 가능하다 보안이 좀 안좋아진다는데 좀 알아봐야겠다.
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/", "/home", "/member/join", "/member/login", "/joinFormId", "/joinFormNick", "/css/**", "/js/**","/logo/**", "/oauth2/**").permitAll()
+                                .requestMatchers("/", "/home", "/member/join", "/member/login", "/joinFormId", "/joinFormNick", "/css/**", "/js/**","/logo/**", "/oauth2/**","/register/content/**","/register/search/**","/product/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin ->

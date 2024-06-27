@@ -1,10 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="~{fragments/head :: head}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div id="product-content">
+    <div th:if="${products != null}">
+    <div class="card card-side bg-base-100 shadow-xl h-32 custom-card" th:each="product : ${products}">
 
+            <figure th:if="${product.getFiles() != null and !product.getFiles().isEmpty()}" class="figure-img">
+                <img th:src="@{'/product/' + ${product.files.get(0).fileName}}" alt="Image not found"/>
+        </figure>
+        <figure th:if="${product.files == null || product.files.isEmpty()}" class="figure-img">
+            <img src="/logo/unnamed.jpg" alt="productImg"/>
+        </figure>
+        <div class="card-body" th:if="${product.isAuctionCheck() == true}">
+            <h2 class="card-title" th:text="${product.title}">상품제목</h2>
+            <p th:text="'현재 입찰가 '+${product.getAuctionDTO().getEndPrice() +'원'}"></p>
+            <div class="card-actions justify-end">
+                <button class="btn btn-primary" th:onclick="'window.location.href=\'/register/content/' + ${product.id} + '\';'">상품보기</button>
+            </div>
+        </div>
+            <div class="card-body" th:unless="${product.isAuctionCheck() == true}">
+                <h2 class="card-title" th:text="${product.title}">상품제목</h2>
+                <p th:text="'가격 '+${product.price +'원'}"></p>
+                <p class="seller_location" th:text="'판매자 위치 : '+${product.sellerLocation}"></p>
+            <div class="card-actions justify-end">
+                <button class="btn btn-primary" th:onclick="'window.location.href=\'/register/content/' + ${product.id} + '\';'">상품보기</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div th:if="${products == null || products.isEmpty()}">
+        <center>검색 결과가 존재하지 않습니다.</center>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>

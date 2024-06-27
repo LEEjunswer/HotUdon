@@ -1,12 +1,9 @@
 package com.HotUdon.dto;
 
 import com.HotUdon.model.Role;
-import jakarta.persistence.Column;
-import lombok.*;
-import org.hibernate.annotations.Comment;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import lombok.*;
+
 
 @Getter
 @Setter

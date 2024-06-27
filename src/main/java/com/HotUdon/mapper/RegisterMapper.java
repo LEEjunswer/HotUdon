@@ -20,6 +20,7 @@ public class RegisterMapper {
         registerDTO.setProductMethod(register.getProductMethod());
         registerDTO.setMemberDTO(MemberMapper.mapEntityToDTO(register.getMember()));
         registerDTO.setAuctionDTO(AuctionMapper.mapEntityToDTO(register.getAuction()));
+        registerDTO.setFiles(FileMapper.mapEntityToDtoList(register.getFiles()));
         return registerDTO;
     }
     public static Register mapDtoToEntity(RegisterDTO registerDTO){
@@ -36,7 +37,7 @@ public class RegisterMapper {
         register.setAuction(AuctionMapper.mapDtoToEntity(registerDTO.getAuctionDTO()));
         register.setMember(MemberMapper.mapDtoToEntity(registerDTO.getMemberDTO()));
         register.setProductMethod(registerDTO.getProductMethod());
-
+        register.setFiles(FileMapper.mapDtoToEntityList(registerDTO.getFiles(), register));
         return register;
     }
 }

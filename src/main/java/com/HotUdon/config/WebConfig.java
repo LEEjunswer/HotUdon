@@ -38,7 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(1); // 모든 경로에 대해 로깅을 수행하는 Interceptor  우선 순위를 정한다.
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login", "/members/join", "/static/**", "/uploads/**", "/profile/**")
+                .excludePathPatterns("/product/content/**","/product/search/**","/login", "/members/join", "/static/**", "/uploads/**", "/profile/**")
                 .order(3);
     }
 }

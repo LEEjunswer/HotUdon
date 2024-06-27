@@ -18,6 +18,9 @@ import com.HotUdon.repository.register.RegisterRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -70,6 +73,13 @@ public class RegisterServiceImpl implements RegisterService{
         return RegisterMapper.mapEntityToDTO(register);
      }
      return null;
+    }
+
+    @Override
+    public Page<RegisterDTO> findBySearchProduct(String search,int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Register> registerPage = registerRepository.searchRegisters(search,pageable);
+        return registerPage.map(RegisterMapper::mapEntityToDTO);
     }
 
 

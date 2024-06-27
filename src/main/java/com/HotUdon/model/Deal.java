@@ -1,9 +1,8 @@
 package com.HotUdon.model;
 
-import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.Fetch;
+import jakarta.persistence.*;
 
 @Entity
 @Getter

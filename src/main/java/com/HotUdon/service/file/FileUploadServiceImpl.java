@@ -24,6 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,9 +39,10 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Override
     @Transactional
-    public FileUploadDTO saveFile(MultipartFile file, RegisterDTO registerDTO) throws IOException {
+    public FileUploadDTO saveFile(MultipartFile file, RegisterDTO registerDTO,String loginId) throws IOException {
         if (!file.isEmpty()) {
-            String filename = StringUtils.cleanPath(file.getOriginalFilename());
+            String originalFilename = StringUtils.cleanPath(file.getOriginalFilename());
+            String filename = loginId+"_" + originalFilename;
             Path filePath = Paths.get(fileStorageProperties.getProductUploadPath() + File.separator + filename);
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
             Register register = RegisterMapper.mapDtoToEntity(registerDTO);
@@ -64,14 +66,24 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Override
     @Transactional
-    public List<FileUploadDTO> saveFiles(List<MultipartFile> files, RegisterDTO registerDTO) throws IOException {
+    public List<FileUploadDTO> saveFiles(List<MultipartFile> files, RegisterDTO registerDTO,String loginId) throws IOException {
         List<FileUploadDTO> savedFileDTOs = new ArrayList<>();
         for (MultipartFile file : files) {
-            FileUploadDTO fileUploadDTO = saveFile(file, registerDTO);
+            FileUploadDTO fileUploadDTO = saveFile(file, registerDTO,loginId);
             if (fileUploadDTO != null) {
                 savedFileDTOs.add(fileUploadDTO);
             }
         }
         return savedFileDTOs;
+    }
+
+    @Override
+    public List<FileUploadDTO> findAllByRegisterId(Long registerId) {
+
+        List<FileUpload> entities = fileUploadRepository.findAllByRegisterId(registerId);
+        if (entities != null && !entities.isEmpty()) {
+            return entities.stream().map(FileMapper::mapEntityToDto).collect(Collectors.toList());
+        }
+        return Collections.emptyList();
     }
 }
