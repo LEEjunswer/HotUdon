@@ -19,7 +19,7 @@ UPLOAD_PROFILE=멤버 프로필 업로드 위치
 ![keyProperties](https://github.com/LEEjunswer/HotUdon/assets/126369781/f20b4159-58ad-4b5d-b3cb-d2c588bfbf91)
 
 
-#Oauth2를 활용한 사용자 인증:
+Oauth2를 활용한 사용자 인증:
 
 OAuth2 서버를 설정하여 사용자 인증과 토큰 발급을 관리합니다.
 사용자 로그인 시 OAuth2 서버로 인증 요청을 보내고, 사용자가 승인을 하면 인증 코드를 받아 액세스 토큰을 발급받습니다.
