@@ -1,4 +1,5 @@
 # HotUdon
+노션 구현한 상태 : https://scratch-emoji-518.notion.site/HotUdon-Ver2-a107b6abd79a43c5a8eb0c2381e708d9
 
 프로젝트에 key.properties 를 만들고 
 DB_USERNAME= sql아이디
