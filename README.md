@@ -1,7 +1,25 @@
 # HotUdon
 
+프로젝트에 key.properties 를 만들고 
+DB_USERNAME= sql아이디
+DB_PASSWORD= sql 비밀번호
 
-Oauth2를 활용한 사용자 인증:
+KAKAO_CLIENT_ID=카카오
+KAKAO_CLIENT_SECRET=카카오시크릿
+
+NAVER_CLIENT_ID=네이버
+NAVER_CLIENT_SECRET=네이버시크릿
+
+GOOGLE_CLIENT_ID=구글
+GOOGLE_CLIENT_SECRET=구글시크릿
+
+UPLOAD_PATH=상품이미지 업로드 위치
+UPLOAD_PROFILE=멤버 프로필 업로드 위치
+
+![keyProperties](https://github.com/LEEjunswer/HotUdon/assets/126369781/f20b4159-58ad-4b5d-b3cb-d2c588bfbf91)
+
+
+#Oauth2를 활용한 사용자 인증:
 
 OAuth2 서버를 설정하여 사용자 인증과 토큰 발급을 관리합니다.
 사용자 로그인 시 OAuth2 서버로 인증 요청을 보내고, 사용자가 승인을 하면 인증 코드를 받아 액세스 토큰을 발급받습니다.
