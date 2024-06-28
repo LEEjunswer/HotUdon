@@ -35,3 +35,9 @@
 #dummyMember{
     display: none;
 }
+.heart-check {
+    fill: #ff2825;
+}
+.icon-tabler-heart {
+    cursor: pointer;
+}

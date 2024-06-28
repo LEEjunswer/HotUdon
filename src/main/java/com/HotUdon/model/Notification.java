@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 public class Notification {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Notification_id",nullable = false)
     private Long id;
 

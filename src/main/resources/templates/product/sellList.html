@@ -19,11 +19,12 @@
         <div class="card-body" th:if="${product.isAuctionCheck() == true}">
             <h2 class="card-title" th:text="${product.title}">상품제목</h2>
             <p th:text="'현재 입찰가 '+${product.getAuctionDTO().getEndPrice() +'원'}"></p>
-            <div class="card-actions justify-end"  onclick="addToWishlist(event)">
+            <div class="card-actions justify-end"  th:onclick="'addToWishlist(event, ' + ${product.id} + ');'">
                <!-- <button class="btn btn-primary" th:onclick="'window.location.href=\'/register/content/' + ${product.id} + '\';'">상품보기</button>-->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                    <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                        <path th:if="${#lists.contains(dibsCheck, product.id)}" d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" class="heart-path heart-check"/>
+                        <path th:unless="${#lists.contains(dibsCheck, product.id)}" d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" class="heart-path"/>
                 </svg>
             </div>
         </div>
@@ -31,10 +32,11 @@
                 <h2 class="card-title" th:text="${product.title}">상품제목</h2>
                 <p th:text="'가격 '+${product.price +'원'}"></p>
                 <p class="seller_location" th:text="'판매자 위치 : '+${product.sellerLocation}"></p>
-            <div class="card-actions justify-end" onclick="addToWishlist(event)">
+            <div class="card-actions justify-end"   th:onclick="'addToWishlist(event, ' + ${product.id} + ');'">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart" width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                    <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                    <path th:if="${#lists.contains(dibsCheck, product.id)}" d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" class="heart-path heart-check"/>
+                    <path th:unless="${#lists.contains(dibsCheck, product.id)}" d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" class="heart-path"/>
                 </svg>
                 <!--<button class="btn btn-primary" th:onclick="'window.location.href=\'/register/content/' + ${product.id} + '\';'">상품보기</button>-->
             </div>
@@ -46,7 +48,7 @@
         <center>검색 결과가 존재하지 않습니다.</center>
     </div>
 </div>
-<div id="dummyMember" th:if="${m != null}" th:attr="data-value=${m.id}"></div>
+<div id="dummyMember" th:if="${m != null}" th:attr="data-value=${m.nickName}"></div>
 <footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>

@@ -22,7 +22,7 @@ public class Register {
     @Column(name = "register_id" ,nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Comment("상품등록 PK")
-    private Long Id;
+    private Long id;
 
     @Comment("판매제품 제목")
     private String title;

@@ -23,7 +23,6 @@ import java.util.Map;
 public class MemberApiController {
 
     private final MemberServiceImpl memberService;
-    private final HttpSession session;
 
         @PostMapping(value = "/joinFormId")
         public ResponseEntity<Map<String, String>> checkLoginId(@RequestParam String loginId){

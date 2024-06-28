@@ -28,7 +28,7 @@ public class QRegister extends EntityPathBase<Register> {
 
     public final ListPath<FileUpload, QFileUpload> files = this.<FileUpload, QFileUpload>createList("files", FileUpload.class, QFileUpload.class, PathInits.DIRECT2);
 
-    public final NumberPath<Long> Id = createNumber("Id", Long.class);
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath info = createString("info");
 

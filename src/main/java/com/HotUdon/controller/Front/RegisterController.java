@@ -1,7 +1,9 @@
 package com.HotUdon.controller.Front;
 
 import com.HotUdon.dto.FileUploadDTO;
+import com.HotUdon.dto.NotificationDTO;
 import com.HotUdon.service.file.FileUploadService;
+import com.HotUdon.service.notification.NotificationService;
 import com.HotUdon.util.AddressParser;
 import com.HotUdon.config.oauth.PrincipalDetails;
 import com.HotUdon.dto.RegisterDTO;
@@ -20,7 +22,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,6 +33,7 @@ public class RegisterController {
 
     private final RegisterService registerService;
     private final FileUploadService fileUploadService;
+    private final NotificationService notificationService;
 /*    private final */
 
     private boolean logincheck(@AuthenticationPrincipal PrincipalDetails principalDetails){
@@ -60,20 +65,30 @@ public class RegisterController {
        if(multipartFiles != null) {
            fileUploadService.saveFiles(multipartFiles, registerDTO,member.getLoginId());
        }
-        return "redirect:/product/content/"+content;
+        return "redirect:/register/content/"+content;
     }
     @GetMapping("/search")
-    public String search(@RequestParam String search,Model model, @RequestParam(defaultValue = "0") int page,
-                         @RequestParam(defaultValue = "10") int size){
-        /*이걸 준 이유는 @AuthenticationPrincipal PrincipalDetails principalDetails 사용할 경우 로그인을 해야지 이용이 가능하다..*/
+    public String search(@RequestParam String search, Model model, @RequestParam(defaultValue = "0") int page,
+                         @RequestParam(defaultValue = "10") int size) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Page<RegisterDTO>  registerDTOPages=registerService.findBySearchProduct(search,page,size);
-        model.addAttribute("products",registerDTOPages);
+        Page<RegisterDTO> registerDTOPages = registerService.findBySearchProduct(search, page, size);
+        model.addAttribute("products", registerDTOPages);
+
         if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            List<Long> registerIds = registerDTOPages.stream()
+                    .map(RegisterDTO::getId)
+                    .toList();
             Member member = principalDetails.getMember();
-            model.addAttribute("m",member);
-            return "product/sellList";
+            List<NotificationDTO> notificationDTOList = notificationService.findByRegisterIdInAndMemberId(registerIds, member.getId());
+
+            List<Long> dibsRegisterIds = notificationDTOList.stream()
+                    .map(NotificationDTO::getRegisterId)
+                    .toList();
+            model.addAttribute("dibsCheck", dibsRegisterIds );
+            model.addAttribute("m", member);
+        } else {
+            model.addAttribute("dibsCheck", new ArrayList<>());
         }
         return "product/sellList";
     }
