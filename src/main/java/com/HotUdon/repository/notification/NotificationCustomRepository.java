@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface NotificationCustomRepository {
     List<Notification> findByMemberIdAndDibsTrue(Long  memberId);
-    List<Notification>  findByRegisterIdInAndMemberIdAndDibsTrue(List<Long> registerIds, Long memberId);
+    List<Notification>  findAllByRegisterIdInAndMemberIdAndDibsTrue(List<Long> registerIds, Long memberId);
+    Notification findByRegisterIdAndMemberIdAndDibsTrue(Long register, Long memberId);
 }

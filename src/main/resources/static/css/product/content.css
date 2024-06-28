@@ -6,16 +6,35 @@
     border-radius: 4px;
     min-width: 20px;
 }
-.heart-icon{
-    margin-left: 10px;
-}
+
+
 .message-button{
     display: flex;
     align-items: center;
+    justify-content: center;
     background-color: #007bff;
     color: #ffffff;
     border: none;
-    padding: 10px 20px;
+    width: 200px;
+    height: 50px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.content-back{
+    margin-left: 20px;
+    background-color: black;
+}
+
+.buy-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: black;
+    border: none;
+    width: 200px;
+    height: 50px;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;

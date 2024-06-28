@@ -9,6 +9,7 @@ public interface NotificationService {
     String dibsProduct(Member member, Long registerId);
     String undibsProduct(Member member,Long registerId);
     List<NotificationDTO> myDibsProducts(Long memberId);
-    List<NotificationDTO> findByRegisterIdInAndMemberId(List<Long> registerIds, Long memberId);
+    List<NotificationDTO> findAllByRegisterIdAndMemberId(List<Long> registerIds, Long memberId);
+    NotificationDTO findByRegisterIdAndMemberId(Long registerId, Long memberId);
 
 }

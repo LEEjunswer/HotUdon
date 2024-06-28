@@ -80,7 +80,7 @@ public class RegisterController {
                     .map(RegisterDTO::getId)
                     .toList();
             Member member = principalDetails.getMember();
-            List<NotificationDTO> notificationDTOList = notificationService.findByRegisterIdInAndMemberId(registerIds, member.getId());
+            List<NotificationDTO> notificationDTOList = notificationService.findAllByRegisterIdAndMemberId(registerIds, member.getId());
 
             List<Long> dibsRegisterIds = notificationDTOList.stream()
                     .map(NotificationDTO::getRegisterId)
@@ -95,10 +95,21 @@ public class RegisterController {
     @GetMapping("/content/{id}")
     public String content(@PathVariable("id")Long id, Model model){
       RegisterDTO registerDTO = registerService.findById(id);
-        System.out.println("registerDTO.getFiles() = " + registerDTO.getFiles());
       List<FileUploadDTO> fileUploadDTOList = fileUploadService.findAllByRegisterId(registerDTO.getId());
         model.addAttribute("files",fileUploadDTOList);
         model.addAttribute("product",registerDTO);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            Member member = principalDetails.getMember();
+           NotificationDTO notificationDTO = notificationService.findByRegisterIdAndMemberId(registerDTO.getId(), member.getId());
+            System.out.println("값체크 notificationDTO = " + notificationDTO);
+            model.addAttribute("m", member);
+            model.addAttribute("dibCheck",notificationDTO.getRegisterId());
+            return "product/content";
+        }else{
+            model.addAttribute("dibsCheck", null);
+        }
         return "product/content";
     }
 

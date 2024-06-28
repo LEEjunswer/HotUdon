@@ -23,7 +23,7 @@ public class NotificationCustomRepositoryImpl implements NotificationCustomRepos
     }
 
     @Override
-    public List<Notification> findByRegisterIdInAndMemberIdAndDibsTrue(List<Long> registerIds, Long memberId) {
+    public List<Notification> findAllByRegisterIdInAndMemberIdAndDibsTrue(List<Long> registerIds, Long memberId) {
         /*List로 가져올 경우 in을 쓴다.*/
 
         List<Notification> results = jpaQueryFactory
@@ -31,9 +31,16 @@ public class NotificationCustomRepositoryImpl implements NotificationCustomRepos
                 .where(notification.register.id.in(registerIds), notification.member.id.eq(memberId), notification.isDibs.isTrue())
                 .fetch();
 
-        // 로그 추가
         System.out.println("Query Results: " + results);
 
         return results;
+    }
+
+    @Override
+    public Notification findByRegisterIdAndMemberIdAndDibsTrue(Long register, Long memberId) {
+
+        return  jpaQueryFactory.selectFrom(notification)
+                .where(notification.isDibs.isTrue(),notification.register.id.eq(register),notification.member.id.eq(memberId))
+                .fetchOne();
     }
 }

@@ -57,7 +57,8 @@ footer {
 }
 
 .content-footer {
-    background-color: dimgray;
+    background-color: black;
+
     display: flex;
     height: 60px;
     width: 100%;

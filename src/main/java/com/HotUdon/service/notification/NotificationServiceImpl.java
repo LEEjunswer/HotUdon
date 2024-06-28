@@ -65,7 +65,12 @@ public class NotificationServiceImpl implements NotificationService{
     }
 
     @Override
-    public List<NotificationDTO> findByRegisterIdInAndMemberId(List<Long> registerIds, Long memberId) {
-        return notificationRepository.findByRegisterIdInAndMemberIdAndDibsTrue(registerIds,memberId).stream().map(NotificationMapper ::mapEntityToDto).collect(Collectors.toList());
+    public List<NotificationDTO> findAllByRegisterIdAndMemberId(List<Long> registerIds, Long memberId) {
+        return notificationRepository.findAllByRegisterIdInAndMemberIdAndDibsTrue(registerIds,memberId).stream().map(NotificationMapper ::mapEntityToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public NotificationDTO findByRegisterIdAndMemberId(Long registerId, Long memberId) {
+        return NotificationMapper.mapEntityToDto(notificationRepository.findByRegisterIdAndMemberIdAndDibsTrue(registerId,memberId));
     }
 }

@@ -15,14 +15,15 @@
 
         private Long id;
 
-        @Comment("구매자와 판매자 채팅 대화내용")
         private String text;
 
-        @Comment("대화 생성 날짜")
+
         private String createDate;
 
 
         private String updateDate;
 
-        private ChatRoomDTO chatRoomDTO;  // 해당 메시지가 속한 채팅방 참조
+        private boolean read;
+
+        private Long chatRoomId;  // 해당 메시지가 속한 채팅방 참조
     }
