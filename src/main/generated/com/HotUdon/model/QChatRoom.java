@@ -22,11 +22,17 @@ public class QChatRoom extends EntityPathBase<ChatRoom> {
 
     public static final QChatRoom chatRoom = new QChatRoom("chatRoom");
 
+    public final BooleanPath buyerLeft = createBoolean("buyerLeft");
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final QMember member;
 
+    public final ListPath<ChatMessage, QChatMessage> messages = this.<ChatMessage, QChatMessage>createList("messages", ChatMessage.class, QChatMessage.class, PathInits.DIRECT2);
+
     public final QRegister register;
+
+    public final BooleanPath sellerLeft = createBoolean("sellerLeft");
 
     public QChatRoom(String variable) {
         this(ChatRoom.class, forVariable(variable), INITS);
