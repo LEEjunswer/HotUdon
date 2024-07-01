@@ -2,7 +2,9 @@ package com.HotUdon.controller.Front;
 
 
 import com.HotUdon.config.oauth.PrincipalDetails;
+import com.HotUdon.dto.ChatRoomDTO;
 import com.HotUdon.dto.NotificationDTO;
+import com.HotUdon.service.chatRoom.ChatRoomService;
 import com.HotUdon.service.notification.NotificationService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ import java.util.List;
 public class HomeController {
 
     private final NotificationService notificationService;
+    private final ChatRoomService chatRoomService;
     private boolean logincheck(@AuthenticationPrincipal PrincipalDetails principalDetails){
         if(principalDetails == null){
             return false;
@@ -34,6 +37,9 @@ public class HomeController {
          if (logincheck(principalDetails)) {
             Long memberId =principalDetails.getMember().getId();
              List<NotificationDTO> myDibsProducts =notificationService.myDibsProducts(memberId);
+             int unreadCount = chatRoomService.findByUnreadCount(memberId);
+             System.out.println("unreadCount = " + unreadCount);
+             session.setAttribute("unreadCount",unreadCount);
              session.setAttribute("myDibs",myDibsProducts.size());
              return "index";
          }

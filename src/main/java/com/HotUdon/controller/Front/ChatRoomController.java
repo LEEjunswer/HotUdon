@@ -30,15 +30,16 @@ public class ChatRoomController {
         return false;
     }
 
-    @GetMapping("/myMessage")
+    @GetMapping("/myMessages")
     public String myChatRooms(@AuthenticationPrincipal PrincipalDetails principalDetails,Model model){
         if(!loginCheck(principalDetails)){
              return "member/loginForm";
         }
         Member member = principalDetails.getMember();
         List<ChatRoomDTO> chatRoomDTOList =chatRoomService.findAllByMemberId(member.getId());
-        model.addAttribute(chatRoomDTOList);
-        return "chatRoom/myMessage" + member.getLoginId();
+        System.out.println("chatRoomDTOList = " + chatRoomDTOList);
+        model.addAttribute("chatRooms",chatRoomDTOList);
+        return "chat/myMessage";
     }
 }
 

@@ -25,5 +25,9 @@
 
         private boolean read;
 
+        private Long senderId;
+
+        private Long receiverId;
+
         private Long chatRoomId;  // 해당 메시지가 속한 채팅방 참조
     }

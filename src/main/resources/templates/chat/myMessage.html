@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<div th:replace="~{fragments/header :: header}"></div>
+<div id="myChat-content">
+    <ul class="chat-room-list" th:if="${chatRooms}" th:each="chatRoom : ${chatRooms}">
+        <li class="chat-room">
+            <a href="/chatRoom/1">
+                <div class="chat-room-info">
+                    <span class="chat-room-name" th:text="${chatRoom.register.member.nickName}">판매자아이디</span>
+                    <span class="last-message-time">2 hours ago</span>
+                </div>
+            </a>
+        </li>
+
+    </ul>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</html>

@@ -13,11 +13,12 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class ChatRoom {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "chat_id", nullable = false)
+    @Column(name = "chat_room_id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

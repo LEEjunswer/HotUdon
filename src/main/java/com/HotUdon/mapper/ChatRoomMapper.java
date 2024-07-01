@@ -18,8 +18,8 @@ public class ChatRoomMapper {
         }
         ChatRoomDTO chatRoomDTO = new ChatRoomDTO();
         chatRoomDTO.setId(chatRoom.getId());
-        chatRoomDTO.setMemberId(chatRoom.getMember().getId());
-       chatRoomDTO.setRegisterId(chatRoom.getRegister().getId());
+        chatRoomDTO.setRegister(chatRoom.getRegister());
+       chatRoomDTO.setMember(chatRoom.getMember());
         chatRoomDTO.setBuyerLeft(chatRoom.isBuyerLeft());
         chatRoomDTO.setSellerLeft(chatRoom.isSellerLeft());
         chatRoomDTO.setUnreadMessageCount(chatRoom.getUnreadMessageCountALong());

@@ -43,7 +43,8 @@ public class SecurityConfig {
         LoginIdAndPasswordFilter customFilter = new LoginIdAndPasswordFilter(authenticationManager(http));
         customFilter.setFilterProcessesUrl("/login");// 로그인 처리 URL 설정
         http
-                .csrf(AbstractHttpConfigurer::disable) // 이걸 줘야지 json 처리 가능하다 보안이 좀 안좋아진다는데 좀 알아봐야겠다.
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable()) // 이걸 줘야지 json 처리 가능하다 보안이 좀 안좋아진다는데 좀 알아봐야겠다.
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/", "/home", "/member/join", "/member/login", "/joinFormId", "/joinFormNick", "/css/**", "/js/**","/logo/**", "/oauth2/**","/register/content/**","/register/search/**","/product/**").permitAll()

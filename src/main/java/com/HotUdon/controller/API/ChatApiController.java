@@ -18,6 +18,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -44,12 +45,13 @@ public class ChatApiController {
            return ResponseEntity.ok(response);
         }
         ChatRoomDTO check = chatRoomService.createChatRoom(memberId, registerId);
+        System.out.println("check = " + check);
         if(check != null){
             System.out.println("check = " + check);
            MemberDTO memberDTO = memberService.findById(memberId);
             RegisterDTO registerDTO = registerService.findById(registerId);
             System.out.println("memberDTO = " + memberDTO);
-           response.put("msg,", memberDTO.getNickName()+"채팅방에 입장하셧습니다");
+            response.put("msg,", memberDTO.getNickName()+"채팅방에 입장하셧습니다");
             response.put("chatRoom", check);
             response.put("buyer",memberDTO);
             response.put("seller",registerDTO);
@@ -84,6 +86,9 @@ public class ChatApiController {
     public ResponseEntity<Map<String,String>> sendChat(@AuthenticationPrincipal PrincipalDetails principalDetails,
                                                        @PathVariable("roomId")Long roomId,
                                                        @RequestBody ChatMessageDTO chatMessageDTO){
+        System.out.println("진입체크 chatPost");
+        System.out.println("chatMeesage"+chatMessageDTO);
+        System.out.println("roomId = " + roomId);
         Map<String, String> response = new HashMap<>();
         if (principalDetails == null) {
             response.put("msg", "잘못된 접근입니다.");
@@ -97,20 +102,28 @@ public class ChatApiController {
         }
         MemberDTO sender;
         MemberDTO receiver;
-        RegisterDTO registerDTO = registerService.findById(chatRoom.getRegisterId()); //판매자
-         MemberDTO memberDTO = memberService.findById(chatRoom.getMemberId());  //구매자
-        if (principalDetails.getMember().getId().equals(registerDTO.getMemberDTO().getId())) {
-            sender = registerDTO.getMemberDTO();
-            receiver = memberDTO;
-        } else if (principalDetails.getMember().getId().equals(memberDTO.getId())) {
-            sender = memberDTO;
-            receiver = registerDTO.getMemberDTO();
-        } else {
-            response.put("msg", "잘못된 접근입니다.");
+            RegisterDTO registerDTO = registerService.findById(chatRoom.getRegister().getId()); //판매자
+             MemberDTO memberDTO = memberService.findById(chatRoom.getMember().getId());  //구매자
+            if (principalDetails.getMember().getId().equals(registerDTO.getMemberDTO().getId())) {
+                sender = registerDTO.getMemberDTO();
+                receiver = memberDTO;
+            } else if (principalDetails.getMember().getId().equals(memberDTO.getId())) {
+                sender = memberDTO;
+                receiver = registerDTO.getMemberDTO();
+            } else {
+                response.put("msg", "잘못된 접근입니다.");
+                return ResponseEntity.ok(response);
+            }
+            chatMessageDTO.setReceiverId(receiver.getId());
+            chatMessageDTO.setSenderId(sender.getId());
+
+            chatMessageService.sendMessage(chatMessageDTO);
             return ResponseEntity.ok(response);
         }
-        chatMessageService.sendMessage(chatMessageDTO);
-        return ResponseEntity.ok(response);
+    @GetMapping("/chat/{roomId}/messages")
+    public ResponseEntity<ChatRoomDTO> getMessages(@PathVariable Long roomId) {
+        ChatRoomDTO chatRoomDTO = chatRoomService.findById(roomId);
+        return ResponseEntity.ok(chatRoomDTO);
     }
 
-}
+    }

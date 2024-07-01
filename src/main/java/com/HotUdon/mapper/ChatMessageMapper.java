@@ -18,6 +18,8 @@ public class ChatMessageMapper {
         chatMessageDTO.setUpdateDate(chatMessage.getUpdateDate());
         chatMessageDTO.setChatRoomId(chatMessage.getChatRoom().getId());
         chatMessageDTO.setRead(chatMessage.isRead());
+        chatMessageDTO.setSenderId(chatMessage.getSenderId());
+        chatMessageDTO.setReceiverId(chatMessage.getReceiverId());
         return chatMessageDTO;
     }
     public static ChatMessage mapDtoToEntity(ChatMessageDTO chatMessageDTO, ChatRoom chatRoom){
@@ -31,6 +33,8 @@ public class ChatMessageMapper {
         chatMessage.setCreateDate(chatMessageDTO.getCreateDate());
         chatMessage.setUpdateDate(chatMessageDTO.getUpdateDate());
         chatMessage.setChatRoom(chatRoom);
+        chatMessage.setReceiverId(chatMessageDTO.getReceiverId());
+        chatMessage.setSenderId(chatMessageDTO.getSenderId());
         return chatMessage;
     }
 }

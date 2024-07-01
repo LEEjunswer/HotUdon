@@ -12,6 +12,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Optional;
 
@@ -29,13 +30,21 @@ public class ChatMessageServiceImpl implements ChatMessageService{
             if(chatMessageDTO == null){
                 return  null;
             }
-       Optional <ChatRoom> chatRoom= chatRoomRepository.findById(chatMessageDTO.getChatRoomId());
-            if(chatRoom.isPresent()){
+
+       Optional <ChatRoom> chatRoomOptional= chatRoomRepository.findById(chatMessageDTO.getChatRoomId());
+            if(chatRoomOptional.isPresent()){
+             ChatRoom chatRoom = chatRoomOptional.get();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
                 ChatMessage chatMessage = ChatMessage.builder()
-                        .chatRoom(chatRoom.get())
+                        .chatRoom(chatRoom)
                         .text(chatMessageDTO.getText())
-                        .read(false).updateDate(new Date().toString())
+                        .senderId(chatMessageDTO.getSenderId())
+                        .receiverId(chatMessageDTO.getReceiverId())
+                        .read(false)
+                        .createDate(LocalDateTime.now().format(formatter))
+                        .updateDate(LocalDateTime.now().format(formatter))
                         .build();
+
                         ChatMessage getChatMessage= chatMessageRepository.save(chatMessage);
                         return ChatMessageMapper.mapEntityToDto(getChatMessage);
               }

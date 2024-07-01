@@ -45,7 +45,7 @@ public class ChatRoomServiceImpl implements ChatRoomService{
 
     @Override
     public List<ChatRoomDTO> findAllByMemberId(Long memberId) {
-      return   chatRoomRepository.findAllByMemberId(memberId).stream().map(ChatRoomMapper :: mapEntityToDto).collect(Collectors.toList());
+      return   chatRoomRepository.findByAllMessageMemberId(memberId).stream().map(ChatRoomMapper :: mapEntityToDto).collect(Collectors.toList());
 
     }
 
@@ -58,6 +58,13 @@ public class ChatRoomServiceImpl implements ChatRoomService{
       }
 
         return null;
+    }
+
+    @Override
+    public int findByUnreadCount(Long memberId) {
+            int unreadCountBuyerMessage = chatRoomRepository.findAllByRegisterIdInMemberIdCount(memberId);
+            int unreadCountSellerMessage = chatRoomRepository.findAllByMemberIdCount(memberId);
+        return unreadCountSellerMessage+unreadCountBuyerMessage;
     }
 
 }

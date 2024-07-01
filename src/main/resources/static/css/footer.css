@@ -54,3 +54,8 @@
 span{
     margin-bottom: 5px;
 }
+.message-link{
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
