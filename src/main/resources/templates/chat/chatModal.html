@@ -14,8 +14,9 @@
             <path d="M5 12l6 -6" />
         </svg>
         <div id="seller-bar">
-            <div class="font-bold" th:text="${product.memberDTO.nickName}">판매자 닉네임</div>
-            <div class="text-sm opacity-50" th:text="${product.sellerLocation}">판매자 주소</div>
+            <div class="font-bold" th:if="${product != null}" th:text="${product.memberDTO.nickName}">판매자 닉네임</div>
+            <div class="text-sm opacity-50" th:if="${ product != null}" th:text="${product.sellerLocation}">판매자 주소</div>
+
         </div>
         <div id="chat-menu" class="dropdown dropdown-end justify-end">
             <svg tabindex="0" role="button" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="52" height="52" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">

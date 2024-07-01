@@ -30,4 +30,9 @@ public class ChatRoomDTO {
     private List<ChatMessageDTO> messages;
 
     private long unreadMessageCount;
+
+    private ChatMessageDTO lastMessage;
+
+    private String relativeTime;
+
 }

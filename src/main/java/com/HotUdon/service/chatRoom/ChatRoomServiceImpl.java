@@ -1,5 +1,6 @@
 package com.HotUdon.service.chatRoom;
 
+import com.HotUdon.dto.ChatMessageDTO;
 import com.HotUdon.dto.ChatRoomDTO;
 import com.HotUdon.mapper.ChatRoomMapper;
 import com.HotUdon.model.ChatRoom;
@@ -11,6 +12,9 @@ import com.HotUdon.repository.register.RegisterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,7 +49,18 @@ public class ChatRoomServiceImpl implements ChatRoomService{
 
     @Override
     public List<ChatRoomDTO> findAllByMemberId(Long memberId) {
-      return   chatRoomRepository.findByAllMessageMemberId(memberId).stream().map(ChatRoomMapper :: mapEntityToDto).collect(Collectors.toList());
+       List<ChatRoomDTO> chatRoomDTOList =chatRoomRepository.findByAllMessageMemberId(memberId).stream().map(ChatRoomMapper :: mapEntityToDto).collect(Collectors.toList());
+        for (ChatRoomDTO chatRoomDTO : chatRoomDTOList) {
+            List<ChatMessageDTO> messages = chatRoomDTO.getMessages();
+            if (messages != null && !messages.isEmpty()) {
+                ChatMessageDTO lastMessage = messages.get(messages.size() - 1);
+                chatRoomDTO.setLastMessage(lastMessage);
+                chatRoomDTO.setRelativeTime(calculateRelativeTime(chatRoomDTO.getLastMessage().getUpdateDate()));
+            } else {
+                chatRoomDTO.setLastMessage(null);
+            }
+        }
+      return chatRoomDTOList;
 
     }
 
@@ -67,4 +82,22 @@ public class ChatRoomServiceImpl implements ChatRoomService{
         return unreadCountSellerMessage+unreadCountBuyerMessage;
     }
 
+    public String calculateRelativeTime(String dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        LocalDateTime messageTime = LocalDateTime.parse(dateTime, formatter);
+        LocalDateTime now = LocalDateTime.now();
+
+        Duration duration = Duration.between(messageTime, now);
+        long minutes = duration.toMinutes();
+        long hours = duration.toHours();
+        long days = duration.toDays();
+
+        if (minutes < 60) {
+            return minutes + " 분 전";
+        } else if (hours < 24) {
+            return hours + " 시간 전";
+        } else {
+            return days + " 일 전";
+        }
+    }
 }

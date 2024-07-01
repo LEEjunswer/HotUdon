@@ -1,5 +1,6 @@
 package com.HotUdon.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Member {
 
     @Id

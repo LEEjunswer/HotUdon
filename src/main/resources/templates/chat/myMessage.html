@@ -7,16 +7,19 @@
 <div th:replace="~{fragments/header :: header}"></div>
 <div id="myChat-content">
     <ul class="chat-room-list" th:if="${chatRooms}" th:each="chatRoom : ${chatRooms}">
-        <li class="chat-room">
-            <a href="/chatRoom/1">
-                <div class="chat-room-info">
-                    <span class="chat-room-name" th:text="${chatRoom.register.member.nickName}">판매자아이디</span>
-                    <span class="last-message-time">2 hours ago</span>
+        <li class="chat-room" th:onclick="|chatClickList('${chatRoom.register.id}')|">
+            <div class="chat-room-info">
+                        <span class="chat-room-name" th:text="${chatRoom.register.member.nickName}">판매자아이디</span>
+                        <span class="last-message-text" th:text="${chatRoom.getLastMessage().getText()}">Last-msg</span>
+                    <span class="last-message-time" th:text="${chatRoom.getRelativeTime()}">2 hours ago</span>
+                    <span class="unReadBadge" th:attr="data-badge=${chatRoom.unreadMessageCount}">안읽은메시지</span>
                 </div>
-            </a>
         </li>
 
     </ul>
 </div>
+<div id="dummyMemberId" th:if="${m != null}" th:attr="data-value=${m.id}"></div>
+<script src="/js/myMessage.js"></script>
+<div th:replace="~{chat/chatModal :: chatModal}"></div>
 <footer th:replace="~{fragments/footer :: footer}"></footer>
 </html>
