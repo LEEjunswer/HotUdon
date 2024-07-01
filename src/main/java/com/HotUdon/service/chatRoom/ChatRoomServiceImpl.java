@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +32,10 @@ public class ChatRoomServiceImpl implements ChatRoomService{
                 .orElseThrow(() -> new IllegalArgumentException("Invalid member ID"));
         Register register = registerRepository.findById(registerId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid register ID"));
+        Optional<ChatRoom> existingChatRoom = chatRoomRepository.findByMemberAndRegister(member, register);
+        if (existingChatRoom.isPresent()) {
+            return ChatRoomMapper.mapEntityToDto(existingChatRoom.get());
+        }
         ChatRoom chatRoom = new ChatRoom();
         chatRoom.setMember(member);
         chatRoom.setRegister(register);
@@ -42,6 +47,17 @@ public class ChatRoomServiceImpl implements ChatRoomService{
     public List<ChatRoomDTO> findAllByMemberId(Long memberId) {
       return   chatRoomRepository.findAllByMemberId(memberId).stream().map(ChatRoomMapper :: mapEntityToDto).collect(Collectors.toList());
 
+    }
+
+    @Override
+    public ChatRoomDTO findById(Long roomId) {
+      Optional<ChatRoom> chatRoomOptional = chatRoomRepository.findById(roomId);
+      if(chatRoomOptional.isPresent()){
+        ChatRoom chatRoom=   chatRoomOptional.get();
+          return ChatRoomMapper.mapEntityToDto(chatRoom);
+      }
+
+        return null;
     }
 
 }

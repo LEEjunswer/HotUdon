@@ -103,9 +103,11 @@ public class RegisterController {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             Member member = principalDetails.getMember();
            NotificationDTO notificationDTO = notificationService.findByRegisterIdAndMemberId(registerDTO.getId(), member.getId());
-            System.out.println("값체크 notificationDTO = " + notificationDTO);
+           if(notificationDTO != null) {
+               System.out.println("값체크 notificationDTO = " + notificationDTO);
+               model.addAttribute("dibCheck", notificationDTO.getRegisterId());
+           }
             model.addAttribute("m", member);
-            model.addAttribute("dibCheck",notificationDTO.getRegisterId());
             return "product/content";
         }else{
             model.addAttribute("dibsCheck", null);

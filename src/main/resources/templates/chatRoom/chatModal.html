@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body th:fragment="chatModal">
+<div id="chatModal">
+    <div id="chat-navbar" class="chat-navbar bg-base-100">
+        <svg id="closeModal" onclick="closeModal()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="52" height="52" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M5 12l14 0" />
+            <path d="M5 12l6 6" />
+            <path d="M5 12l6 -6" />
+        </svg>
+        <div id="seller-bar">
+            <div class="font-bold" th:text="${product.memberDTO.nickName}">판매자 닉네임</div>
+            <div class="text-sm opacity-50" th:text="${product.sellerLocation}">판매자 주소</div>
+        </div>
+        <div id="chat-menu" class="dropdown dropdown-end justify-end">
+            <svg tabindex="0" role="button" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="52" height="52" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M4 6l16 0" />
+                <path d="M4 12l16 0" />
+                <path d="M4 18l16 0" />
+            </svg>
+            <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                <li><a>상품구매하기</a></li>
+                <li><a>신고하기</a></li>
+                <li><a>대화방 나가기</a></li>
+            </ul>
+        </div>
+    </div>
+    <hr id="chat-hr">
+    <div id="message-container"></div>
+    <footer id="chat-footer">
+        <div id="chat-div"><input id="messageInput" type="text" placeholder="글을 입력해주세요" class="input input-bordered input-sm w-full max-w-xs rounded-full"/><button class="btn btn-sm">전송</button>
+        </div></footer>
+</div>
+</body>
+</html>

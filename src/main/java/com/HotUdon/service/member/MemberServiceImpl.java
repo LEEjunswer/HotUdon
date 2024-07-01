@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -90,6 +91,9 @@ public class MemberServiceImpl implements MemberService{
         }
         memberRepository.save(member);
     }
+
+
+
     @Override
     public MemberDTO findById(Long id) {
        Optional<Member> memberOptional = memberRepository.findById(id);

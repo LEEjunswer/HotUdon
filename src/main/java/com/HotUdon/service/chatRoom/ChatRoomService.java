@@ -8,4 +8,5 @@ import java.util.List;
 public interface ChatRoomService {
     ChatRoomDTO createChatRoom(Long memberId, Long registerId);
     List<ChatRoomDTO> findAllByMemberId(Long memberId);
+    ChatRoomDTO findById(Long roomId);
 }

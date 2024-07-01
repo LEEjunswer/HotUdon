@@ -42,3 +42,9 @@
 .message-button svg {
     margin-right: 8px;
 }
+#dummyRegisterId{
+    display: none;
+}
+#dummyMemberId{
+    display: none;
+}

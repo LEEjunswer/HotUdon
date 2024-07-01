@@ -51,7 +51,7 @@ public class Member {
     @Column(updatable = false)
     private  String regDate;
 
-    @Comment("유저 로그인할떄마다 없데이트")
+    @Comment("유저 로그인할떄마다 업데이트")
     private String loginDay;
 
     @Comment("유저 포인트")
