@@ -10,7 +10,7 @@
         <li class="chat-room" th:onclick="|chatClickList('${chatRoom.register.id}')|">
             <div class="chat-room-info">
                         <span class="chat-room-name" th:text="${chatRoom.register.member.nickName}">판매자아이디</span>
-                        <span class="last-message-text" th:text="${chatRoom.getLastMessage().getText()}">Last-msg</span>
+                        <span class="last-message-text" th:text="${chatRoom.lastMessage.text}">Last-msg</span>
                     <span class="last-message-time" th:text="${chatRoom.getRelativeTime()}">2 hours ago</span>
                     <span class="unReadBadge" th:attr="data-badge=${chatRoom.unreadMessageCount}">안읽은메시지</span>
                 </div>

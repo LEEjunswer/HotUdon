@@ -3,6 +3,7 @@ package com.HotUdon.dto;
 
 import com.HotUdon.model.Member;
 import com.HotUdon.model.Register;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ChatRoomDTO {
 
 

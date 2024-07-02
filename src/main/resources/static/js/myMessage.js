@@ -1,26 +1,26 @@
+let stompClient = null;
+let chatRoomId = null;
+let currentUserId = null;
+let receiverId = null;
 function chatClickList(register) {
     if (!document.getElementById('dummyMemberId')) {
         alert("로그인 후 메시지 전송이 가능합니다.");
         return false;
     }
-    console.log(register+"register진입");
+
     const memberId = document.getElementById('dummyMemberId').getAttribute('data-value');
-    console.log(memberId +"memberId");
+
     fetch(`/api/v1/chat?memberId=${memberId}&registerId=${register}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         }
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("채팅방을 생성하지 못했습니다.");
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(chatRoom => {
-            console.log("chatRoom: " + JSON.stringify(chatRoom.chatRoom.id));
+            console.log("진입체크");
             chatRoomId = chatRoom.chatRoom.id;
+            console.log(chatRoomId+"RoomIㅇ");
             currentUserId = memberId;
             connectToChatRoom(chatRoomId);
             openModal();
@@ -35,13 +35,16 @@ function connectToChatRoom(id) {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log("연결체크: " + frame);
-        stompClient.subscribe('/topic/chat/' + id, function (message) {
+            stompClient.subscribe('/topic/chat/' + id, function (message) {
             const messageData = JSON.parse(message.body);
+            console.log(messageData+ "messsageDate");
+            receiverId = messageData.receiverId;
             showMessage(messageData.text, messageData.senderId, messageData.receiverId);
         });
+         fetchMessages()
     });
 }
-function sendMessage() {
+function sendMessage(receiverId) {
     const messageInput = document.getElementById('messageInput');
     const message = messageInput.value;
     if(message.length === 0){
@@ -52,7 +55,7 @@ function sendMessage() {
     const messageData = {
         text: message,
         senderId: currentUserId,
-        receiverId: null, // 서버에서 설정됨
+        receiverId: receiverId, // 서버에서 설정됨
         chatRoomId: chatRoomId
     };
     fetch(`/api/v1/${chatRoomId}/chat`, {
@@ -77,9 +80,10 @@ function fetchMessages() {
     fetch(`/api/v1/chat/${chatRoomId}/messages`)
         .then(response => response.json())
         .then(data => {
+            console.log(JSON.stringify(data) + " 값체크");
             const messageContainer = document.getElementById('message-container');
             messageContainer.innerHTML = '';
-            data.messages.forEach(message => {
+            data.forEach(message => {
                 showMessage(message.text, message.senderId, message.receiverId);
             });
         })
@@ -87,10 +91,11 @@ function fetchMessages() {
 }
 
 function showMessage(text, senderId, receiverId) {
+    console.log("message진입");
     const messageContainer = document.getElementById('message-container');
     const messageElement = document.createElement('div');
     const isSender = senderId === currentUserId;
-
+    console.log("Show message: ", text, senderId, receiverId);
     messageElement.classList.add('chat');
     messageElement.classList.add(isSender ? 'chat-end' : 'chat-start');
 

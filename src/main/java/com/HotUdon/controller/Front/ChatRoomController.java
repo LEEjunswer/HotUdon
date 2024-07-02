@@ -37,6 +37,7 @@ public class ChatRoomController {
         }
         Member member = principalDetails.getMember();
         List<ChatRoomDTO> chatRoomDTOList =chatRoomService.findAllByMemberId(member.getId());
+
         model.addAttribute("m",member);
         model.addAttribute("chatRooms",chatRoomDTOList);
         return "chat/myMessage";

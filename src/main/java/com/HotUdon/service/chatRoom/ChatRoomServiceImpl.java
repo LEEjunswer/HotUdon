@@ -36,7 +36,7 @@ public class ChatRoomServiceImpl implements ChatRoomService{
                 .orElseThrow(() -> new IllegalArgumentException("Invalid member ID"));
         Register register = registerRepository.findById(registerId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid register ID"));
-        Optional<ChatRoom> existingChatRoom = chatRoomRepository.findByMemberAndRegister(member, register);
+        Optional<ChatRoom> existingChatRoom = chatRoomRepository.findBySellerAndBuyerAndRegister(member, register);
         if (existingChatRoom.isPresent()) {
             return ChatRoomMapper.mapEntityToDto(existingChatRoom.get());
         }

@@ -1,6 +1,7 @@
 package com.HotUdon.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import lombok.*;
@@ -60,6 +61,7 @@ public class Register {
     private Auction auction;
 
     @OneToMany(mappedBy = "register", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private  List<FileUpload> files = new ArrayList<>();
 
 }

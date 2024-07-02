@@ -11,9 +11,14 @@ import com.HotUdon.service.chatMessage.ChatMessageService;
 import com.HotUdon.service.chatRoom.ChatRoomService;
 import com.HotUdon.service.member.MemberService;
 import com.HotUdon.service.register.RegisterService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,35 +31,40 @@ import java.util.Map;
 @RequestMapping("/api/v1")
 @Slf4j
 public class ChatApiController {
-    private final ChatRoomService chatRoomService;
-    private final ChatMessageService chatMessageService;
-    private final MemberService memberService;
-    private final RegisterService registerService;
-    private boolean loginCheck(@AuthenticationPrincipal PrincipalDetails principalDetails){
+
+        private final ChatRoomService chatRoomService;
+        private final ChatMessageService chatMessageService;
+        private final MemberService memberService;
+        private final RegisterService registerService;
+
+        private boolean loginCheck(@AuthenticationPrincipal PrincipalDetails principalDetails){
         if(principalDetails != null){
             return true;
         }
         return  false;
     }
+
     @PostMapping("/chat")
     public ResponseEntity<Map<String, Object>> createChat(@AuthenticationPrincipal PrincipalDetails principalDetails
-    , @RequestParam Long memberId, @RequestParam Long registerId ){
+    , @RequestParam Long memberId, @RequestParam Long registerId ) throws JsonProcessingException {
        Map<String,Object> response =new HashMap<>();
         if(!loginCheck(principalDetails)){
             response.put("msg", "잘못된 접근입니다.");
            return ResponseEntity.ok(response);
         }
         ChatRoomDTO check = chatRoomService.createChatRoom(memberId, registerId);
-        System.out.println("check = " + check);
         if(check != null){
-            System.out.println("check = " + check);
            MemberDTO memberDTO = memberService.findById(memberId);
             RegisterDTO registerDTO = registerService.findById(registerId);
+            System.out.println("진입체크");
             System.out.println("memberDTO = " + memberDTO);
-            response.put("msg,", memberDTO.getNickName()+"채팅방에 입장하셧습니다");
             response.put("chatRoom", check);
             response.put("buyer",memberDTO);
             response.put("seller",registerDTO);
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonResponse = mapper.writeValueAsString(check);
+            System.out.println("Chat Room JSON Data: " + jsonResponse);
+            System.out.println("response = " + response);
            return ResponseEntity.ok(response);
         }
         /*실패 로직*/
@@ -63,7 +73,7 @@ public class ChatApiController {
         return ResponseEntity.ok(response);
 
     }
-   /* @GetMapping("/{roomId}/chat")
+    /*@GetMapping("/chat/{roomId}/messages")
     public ResponseEntity<Map<String,String>> referenceChat(@AuthenticationPrincipal PrincipalDetails principalDetails,
                                                             @PathVariable("roomId")Long roomId,@RequestParam Long memberId,@RequestParam Long registerId){
         Map<String,String> response = new HashMap<>();
@@ -82,6 +92,7 @@ public class ChatApiController {
         response.put("msg","잘못된 접근입니다");
         return ResponseEntity.ok(response);
     }*/
+
     @PostMapping("/{roomId}/chat")
     public ResponseEntity<Map<String,String>> sendChat(@AuthenticationPrincipal PrincipalDetails principalDetails,
                                                        @PathVariable("roomId")Long roomId,
@@ -121,9 +132,10 @@ public class ChatApiController {
             return ResponseEntity.ok(response);
         }
     @GetMapping("/chat/{roomId}/messages")
-    public ResponseEntity<ChatRoomDTO> getMessages(@PathVariable Long roomId) {
+    public ResponseEntity<List<ChatMessageDTO>> getMessages(@PathVariable Long roomId) {
+        System.out.println("roomId = " + roomId);
         ChatRoomDTO chatRoomDTO = chatRoomService.findById(roomId);
-        return ResponseEntity.ok(chatRoomDTO);
+        return ResponseEntity.ok(chatRoomDTO.getMessages());
     }
 
     }
