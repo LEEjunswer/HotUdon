@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{fragments/head :: head}">
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,9 +8,10 @@
 <div th:replace="~{fragments/header :: header}"></div>
 <div id="item-content">
 <div class="item-profile">
-    <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar online">
+    <div tabindex="0" role="button" id="profileButton" class="btn btn-ghost btn-circle avatar">
     <div class="w-10 rounded-full">
-        <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+        <img  sec:authorize="isAuthenticated()" th:if="${session.profile != null}" alt="Tailwind CSS Navbar component" th:src="@{'/profile/' + ${session.profile}}" />
+        <img th:unless="${session.profile != null}" alt="Tailwind CSS Navbar component" th:src="@{/profile/img.png}" />
     </div>
     </div>
     <div class="myPage-nickname">
@@ -65,6 +66,7 @@
 </div>
 
 </div>
+<div th:replace="~{member/profileModal :: profileModal}"></div>
 <footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>

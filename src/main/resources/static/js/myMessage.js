@@ -18,9 +18,7 @@ function chatClickList(register) {
     })
         .then(response => response.json())
         .then(chatRoom => {
-            console.log("진입체크");
             chatRoomId = chatRoom.chatRoom.id;
-            console.log(chatRoomId+"RoomIㅇ");
             currentUserId = memberId;
             connectToChatRoom(chatRoomId);
             openModal();
@@ -80,7 +78,6 @@ function fetchMessages() {
     fetch(`/api/v1/chat/${chatRoomId}/messages`)
         .then(response => response.json())
         .then(data => {
-            console.log(JSON.stringify(data) + " 값체크");
             const messageContainer = document.getElementById('message-container');
             messageContainer.innerHTML = '';
             data.forEach(message => {
@@ -89,12 +86,14 @@ function fetchMessages() {
         })
         .catch(error => console.error('Error:', error));
 }
-
+/*메시지창에서 닉네임이나 이런거 끌 고 올 수 있으면 넣어보자*/
 function showMessage(text, senderId, receiverId) {
-    console.log("message진입");
     const messageContainer = document.getElementById('message-container');
     const messageElement = document.createElement('div');
     const isSender = senderId === currentUserId;
+    console.log(senderId + " = = " +currentUserId)
+    const isReceiver = receiverId === currentUserId;
+    console.log(receiverId + " = = " +currentUserId)
     console.log("Show message: ", text, senderId, receiverId);
     messageElement.classList.add('chat');
     messageElement.classList.add(isSender ? 'chat-end' : 'chat-start');
@@ -106,7 +105,7 @@ function showMessage(text, senderId, receiverId) {
                     </div>
                 </div>
                 <div class="chat-header">
-                    ${isSender ? 'You' : '상대방'}
+                    ${isSender ? 'You' : '판매자'}
                     <time class="text-xs opacity-50">${new Date().toLocaleTimeString()}</time>
                 </div>
                 <div class="chat-bubble">${text}</div>

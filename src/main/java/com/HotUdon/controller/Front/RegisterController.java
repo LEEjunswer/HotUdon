@@ -104,7 +104,6 @@ public class RegisterController {
             Member member = principalDetails.getMember();
            NotificationDTO notificationDTO = notificationService.findByRegisterIdAndMemberId(registerDTO.getId(), member.getId());
            if(notificationDTO != null) {
-               System.out.println("값체크 notificationDTO = " + notificationDTO);
                model.addAttribute("dibCheck", notificationDTO.getRegisterId());
            }
             model.addAttribute("m", member);

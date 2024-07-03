@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body th:fragment="profileModal">
+<div class="modal" id="myModal">
+    <div id="modal_content">
+        <div class="modal-header">
+            <h5 class="modal-title">프로필 사진 변경</h5>
+            <button type="button" id="modalBtn-close" class="btn-close photo-reset" data-bs-dismiss="modal" aria-label="Close">X</button>
+            <hr class="modalBtn-hr">
+            <div class="avatar">
+                <div class="w-24 rounded-full">
+                    <img th:if="${session.profile != null}"
+                         th:src="@{'/profile/' + ${session.profile}}"
+                           alt="img" id="checkImgOne" />
+                    <img th:unless="${session.profile != null}"
+                         th:src="@{/profile/img.png}"
+                         alt="img"  id="checkImgTwo"/>
+                </div>
+            </div>
+            <button type="button" class="btn-close photo-reset" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <hr class="modalBtn-hr">
+        <div class="modal-body">
+            <p>
+                <br>
+                <br>
+                <input type = "file" id = "profile_upload" accept = "image/gif, image/png, image/jpeg">
+            </p>
+        </div>
+        <hr class="modalBtn-hr">
+        <br>
+        <br>
+        <br>
+        <div class="modal-footer justify-content-center" style = "align-items: center;">
+            <button type="button" class="btn photo-reset" id ="photo_reset" data-bs-dismiss="modal">닫기</button>
+            <button type="button" class="btn" id ="photo_submit">변경</button>
+        </div>
+    </div>
+</div>
+<script src="/js/profileModal.js"></script>
+</body>
+</html>

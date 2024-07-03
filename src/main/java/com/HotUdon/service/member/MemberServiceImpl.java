@@ -5,13 +5,22 @@ import com.HotUdon.mapper.MemberMapper;
 import com.HotUdon.model.Member;
 import com.HotUdon.model.Role;
 import com.HotUdon.repository.member.MemberRepository;
+import com.HotUdon.util.FileStorageProperties;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.Optional;
 
@@ -23,6 +32,7 @@ public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final FileStorageProperties fileStorageProperties;
 
     @Override
     public MemberDTO findByLoginIdAndPassword(String loginId, String password) {
@@ -92,6 +102,39 @@ public class MemberServiceImpl implements MemberService{
         memberRepository.save(member);
     }
 
+    @Override
+    public String getMemberProfile(Long id) {
+       Optional<Member> memberOptional = memberRepository.findById(id);
+       if(memberOptional.isPresent()){
+        Member member = memberOptional.get();
+        String profileImg =member.getProfileImg();
+        if(profileImg != null){
+
+        }
+        return profileImg;
+       }
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public String updateProfile(Long id, MultipartFile file) throws IOException {
+        if(file.isEmpty()){
+            throw new IllegalArgumentException("파일이미지가 없습니다");
+        }
+     Optional<Member>  memberOptional=  memberRepository.findById(id);
+        if(memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+            String originalFilename = StringUtils.cleanPath(file.getOriginalFilename());
+            String filename = member.getLoginId() + "_" + originalFilename;
+            Path filePath = Paths.get(fileStorageProperties.getProfileUploadPath() + File.separator + filename);
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            member.setProfileImg(filename);
+            memberRepository.save(member);
+            return filename;
+        }
+        return null;
+    }
 
 
     @Override
