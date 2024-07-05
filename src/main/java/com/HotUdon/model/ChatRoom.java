@@ -40,7 +40,11 @@ public class ChatRoom {
 
 
     @Transient // 데이터 저장X 메시지를 전달 했을떄 읽었는지 안읽었는지 체크하기
-    public long getUnreadMessageCountALong() {
-        return this.getMessages().stream().filter(message -> !message.isRead()).count();
+    public long getSenderUnreadMessageCountALong() {
+        return this.getMessages().stream().filter(message -> !message.isSenderRead()).count();
+    }
+    @Transient
+    public Long getReceiverUnreadMessageCountALong(){
+        return this.getMessages().stream().filter(message -> !message.isReceiverRead()).count();
     }
 }

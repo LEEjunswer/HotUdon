@@ -75,12 +75,12 @@ public class ChatRoomServiceImpl implements ChatRoomService{
         return null;
     }
 
-    @Override
+  /*  @Override
     public int findByUnreadCount(Long memberId) {
-            int unreadCountBuyerMessage = chatRoomRepository.findAllByRegisterIdInMemberIdCount(memberId);
-            int unreadCountSellerMessage = chatRoomRepository.findAllByMemberIdCount(memberId);
+*//*            int unreadCountBuyerMessage = chatRoomRepository.findAllByRegisterIdInMemberIdCount(memberId);
+            int unreadCountSellerMessage = chatRoomRepository.findAllByMemberIdCount(memberId);*//*
         return unreadCountSellerMessage+unreadCountBuyerMessage;
-    }
+    }*/
 
     public String calculateRelativeTime(String dateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");

@@ -28,11 +28,13 @@ public class QChatMessage extends EntityPathBase<ChatMessage> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final BooleanPath read = createBoolean("read");
-
     public final NumberPath<Long> receiverId = createNumber("receiverId", Long.class);
 
+    public final BooleanPath receiverRead = createBoolean("receiverRead");
+
     public final NumberPath<Long> senderId = createNumber("senderId", Long.class);
+
+    public final BooleanPath senderRead = createBoolean("senderRead");
 
     public final StringPath text = createString("text");
 

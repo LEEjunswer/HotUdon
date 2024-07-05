@@ -22,7 +22,7 @@ public class ChatRoomMapper {
        chatRoomDTO.setMember(chatRoom.getMember());
         chatRoomDTO.setBuyerLeft(chatRoom.isBuyerLeft());
         chatRoomDTO.setSellerLeft(chatRoom.isSellerLeft());
-        chatRoomDTO.setUnreadMessageCount(chatRoom.getUnreadMessageCountALong());
+        chatRoomDTO.setUnreadMessageCount(chatRoom.getSenderUnreadMessageCountALong() + chatRoom.getReceiverUnreadMessageCountALong());
         List<ChatMessageDTO> messageDTOs = chatRoom.getMessages().stream()
                 .map(ChatMessageMapper:: mapEntityToDto )
                 .collect(Collectors.toList());

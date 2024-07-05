@@ -31,6 +31,7 @@ public class ChatMessageServiceImpl implements ChatMessageService{
                 return  null;
             }
 
+            /*여기 구매자인지 판매자인지 나누어서 false 값 전달하기*/
        Optional <ChatRoom> chatRoomOptional= chatRoomRepository.findById(chatMessageDTO.getChatRoomId());
             if(chatRoomOptional.isPresent()){
              ChatRoom chatRoom = chatRoomOptional.get();
@@ -40,7 +41,6 @@ public class ChatMessageServiceImpl implements ChatMessageService{
                         .text(chatMessageDTO.getText())
                         .senderId(chatMessageDTO.getSenderId())
                         .receiverId(chatMessageDTO.getReceiverId())
-                        .read(false)
                         .createDate(LocalDateTime.now().format(formatter))
                         .updateDate(LocalDateTime.now().format(formatter))
                         .build();

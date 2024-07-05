@@ -1,7 +1,6 @@
 let stompClient = null;
 let chatRoomId = null;
-let currentUserId = null;
-let receiverId = null;
+const currentUserId = document.getElementById('dummyMemberId').getAttribute('data-value');
 function chatClickList(register) {
     if (!document.getElementById('dummyMemberId')) {
         alert("로그인 후 메시지 전송이 가능합니다.");
@@ -19,7 +18,7 @@ function chatClickList(register) {
         .then(response => response.json())
         .then(chatRoom => {
             chatRoomId = chatRoom.chatRoom.id;
-            currentUserId = memberId;
+
             connectToChatRoom(chatRoomId);
             openModal();
         })
@@ -36,7 +35,6 @@ function connectToChatRoom(id) {
             stompClient.subscribe('/topic/chat/' + id, function (message) {
             const messageData = JSON.parse(message.body);
             console.log(messageData+ "messsageDate");
-            receiverId = messageData.receiverId;
             showMessage(messageData.text, messageData.senderId, messageData.receiverId);
         });
          fetchMessages()
@@ -78,9 +76,11 @@ function fetchMessages() {
     fetch(`/api/v1/chat/${chatRoomId}/messages`)
         .then(response => response.json())
         .then(data => {
+            console.log("data = " +data);
             const messageContainer = document.getElementById('message-container');
             messageContainer.innerHTML = '';
             data.forEach(message => {
+                console.log(message);
                 showMessage(message.text, message.senderId, message.receiverId);
             });
         })
@@ -90,13 +90,24 @@ function fetchMessages() {
 function showMessage(text, senderId, receiverId) {
     const messageContainer = document.getElementById('message-container');
     const messageElement = document.createElement('div');
-    const isSender = senderId === currentUserId;
-    console.log(senderId + " = = " +currentUserId)
-    const isReceiver = receiverId === currentUserId;
-    console.log(receiverId + " = = " +currentUserId)
+    /*구매자일떄 접속한 아이디가 트루 */
+    let isSender =true;
+    console.log("구매자" + senderId + " = = " +currentUserId)
+    /*receiverId 는 판매자*/
+    console.log("판매자" + receiverId + " = = " +currentUserId)
     console.log("Show message: ", text, senderId, receiverId);
     messageElement.classList.add('chat');
-    messageElement.classList.add(isSender ? 'chat-end' : 'chat-start');
+                                    /* 발신자가 트루면 chat-end  chat-start*/
+    /*내가 구매자든 판매자든 오른쪽으로 준다*/
+    if(receiverId === currentUserId){
+        console.log("판매자 진입");
+        messageElement.classList.add('chat-end');
+         isSender = false;
+    }else if(currentUserId === senderId){
+        console.log("구매자진입");
+            messageElement.classList.add('chat-end');
+    }
+    messageElement.classList.add('chat-start');
 
     messageElement.innerHTML = `
                 <div class="chat-image avatar">
@@ -105,7 +116,8 @@ function showMessage(text, senderId, receiverId) {
                     </div>
                 </div>
                 <div class="chat-header">
-                    ${isSender ? 'You' : '판매자'}
+                <!-- 나중에 구매자랑 판매자랑 따르게 비교하자-->
+                    ${isSender ? '구매자' : '판매자'}
                     <time class="text-xs opacity-50">${new Date().toLocaleTimeString()}</time>
                 </div>
                 <div class="chat-bubble">${text}</div>

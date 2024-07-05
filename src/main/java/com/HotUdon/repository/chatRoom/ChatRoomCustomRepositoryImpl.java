@@ -28,7 +28,7 @@ public class ChatRoomCustomRepositoryImpl implements ChatRoomCustomRepository {
 
 
     /*구매자 로직 가지고오기*/
-    @Override
+   /* @Override
     public int findAllByMemberIdCount(Long memberId) {
         return jpaQueryFactory
                 .select(chatMessage)
@@ -41,7 +41,8 @@ public class ChatRoomCustomRepositoryImpl implements ChatRoomCustomRepository {
                 .fetch()
                 .size();
     }
-
+*/
+/*
     @Override
     public int findAllByRegisterIdInMemberIdCount(Long memberId) {
         return jpaQueryFactory
@@ -53,6 +54,7 @@ public class ChatRoomCustomRepositoryImpl implements ChatRoomCustomRepository {
                 .fetch()
                 .size();
     }
+*/
 
     @Override
     public List<ChatRoom> findByAllMessageMemberId(Long memberId) {

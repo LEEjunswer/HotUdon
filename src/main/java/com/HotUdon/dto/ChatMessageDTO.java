@@ -23,7 +23,9 @@
 
         private String updateDate;
 
-        private boolean read;
+        private boolean receiverRead;
+
+        private boolean senderRead;
 
         private Long senderId;
 

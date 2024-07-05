@@ -2,9 +2,11 @@ package com.HotUdon.controller.Front;
 
 import com.HotUdon.config.oauth.PrincipalDetails;
 import com.HotUdon.dto.ChatRoomDTO;
+import com.HotUdon.dto.RegisterDTO;
 import com.HotUdon.model.Member;
 import com.HotUdon.service.chatMessage.ChatMessageService;
 import com.HotUdon.service.chatRoom.ChatRoomService;
+import com.HotUdon.service.register.RegisterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +25,7 @@ import java.util.List;
 public class ChatRoomController {
     private final ChatRoomService chatRoomService;
     private final ChatMessageService chatMessageService;
+    private final RegisterService registerService;
     private boolean loginCheck(@AuthenticationPrincipal PrincipalDetails principalDetails){
         if(principalDetails != null){
             return  true;
@@ -37,7 +40,10 @@ public class ChatRoomController {
         }
         Member member = principalDetails.getMember();
         List<ChatRoomDTO> chatRoomDTOList =chatRoomService.findAllByMemberId(member.getId());
+        ChatRoomDTO chatRoomDTO =  chatRoomDTOList.get(0);
 
+        RegisterDTO registerDTO = registerService.findById(chatRoomDTO.getRegister().getId());
+        model.addAttribute("product",registerDTO);
         model.addAttribute("m",member);
         model.addAttribute("chatRooms",chatRoomDTOList);
         return "chat/myMessage";

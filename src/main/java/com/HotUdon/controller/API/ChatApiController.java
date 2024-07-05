@@ -116,8 +116,8 @@ public class ChatApiController {
             RegisterDTO registerDTO = registerService.findById(chatRoom.getRegister().getId()); //판매자
              MemberDTO memberDTO = memberService.findById(chatRoom.getMember().getId());  //구매자
             if (principalDetails.getMember().getId().equals(registerDTO.getMemberDTO().getId())) {
-                sender = registerDTO.getMemberDTO();
-                receiver = memberDTO;
+                receiver = registerDTO.getMemberDTO();
+                sender = memberDTO;
             } else if (principalDetails.getMember().getId().equals(memberDTO.getId())) {
                 sender = memberDTO;
                 receiver = registerDTO.getMemberDTO();
@@ -135,6 +135,8 @@ public class ChatApiController {
     public ResponseEntity<List<ChatMessageDTO>> getMessages(@PathVariable Long roomId) {
         System.out.println("roomId = " + roomId);
         ChatRoomDTO chatRoomDTO = chatRoomService.findById(roomId);
+        System.out.println("chatRoomDTO.getMessages() = " + chatRoomDTO.getMessages());
+        /*판매자가 receiverId senderId가 구매자*/
         return ResponseEntity.ok(chatRoomDTO.getMessages());
     }
 

@@ -17,7 +17,8 @@ public class ChatMessageMapper {
         chatMessageDTO.setCreateDate(chatMessage.getCreateDate());
         chatMessageDTO.setUpdateDate(chatMessage.getUpdateDate());
         chatMessageDTO.setChatRoomId(chatMessage.getChatRoom().getId());
-        chatMessageDTO.setRead(chatMessage.isRead());
+        chatMessageDTO.setSenderId(chatMessage.getSenderId());
+        chatMessageDTO.setReceiverId(chatMessage.getReceiverId());
         chatMessageDTO.setSenderId(chatMessage.getSenderId());
         chatMessageDTO.setReceiverId(chatMessage.getReceiverId());
         return chatMessageDTO;
@@ -29,7 +30,8 @@ public class ChatMessageMapper {
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setId(chatMessageDTO.getId());
         chatMessage.setText(chatMessageDTO.getText());
-        chatMessage.setRead(chatMessageDTO.isRead());
+        chatMessage.setSenderId(chatMessageDTO.getSenderId());
+        chatMessage.setReceiverId(chatMessageDTO.getReceiverId());
         chatMessage.setCreateDate(chatMessageDTO.getCreateDate());
         chatMessage.setUpdateDate(chatMessageDTO.getUpdateDate());
         chatMessage.setChatRoom(chatRoom);

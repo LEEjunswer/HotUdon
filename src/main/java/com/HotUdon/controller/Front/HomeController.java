@@ -40,10 +40,10 @@ public class HomeController {
              List<NotificationDTO> myDibsProducts =notificationService.myDibsProducts(member.getId());
              String profile = member.getProfileImg();
              System.out.println("profile = " + profile);
-             int unreadCount = chatRoomService.findByUnreadCount(member.getId());
+         /*    int unreadCount = chatRoomService.findByUnreadCount(member.getId());*/
             /* String profile = */
              session.setAttribute("profile",profile);
-             session.setAttribute("unreadCount",unreadCount);
+/*             session.setAttribute("unreadCount",unreadCount);*/
              session.setAttribute("myDibs",myDibsProducts.size());
              return "index";
          }
