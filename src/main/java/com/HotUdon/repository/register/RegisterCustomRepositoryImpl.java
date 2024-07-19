@@ -35,4 +35,31 @@ public class RegisterCustomRepositoryImpl  implements RegisterCustomRepository{
 
         return new PageImpl<>(results, pageable, total);
     }
+
+    @Override
+    public Page<Register> getNotSoldOutProduct(Pageable pageable) {
+        List<Register> results = jpaQueryFactory
+                .selectFrom(register)
+                .where(register.productStatus.eq(0))
+                .orderBy(register.regDate.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+        long total = results.size();
+
+        return new PageImpl<>(results,pageable,total);
+    }
+    /*우리동내 판매*/
+    public Page<Register> getNotSoldOutProductMyLocation(String location,Pageable pageable) {
+        List<Register> results = jpaQueryFactory
+                .selectFrom(register)
+                .where(register.productStatus.eq(0),register.sellerLocation.eq(location))
+                .orderBy(register.regDate.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+        long total = results.size();
+
+        return new PageImpl<>(results,pageable,total);
+    }
 }

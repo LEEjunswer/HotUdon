@@ -9,6 +9,5 @@ public interface ChatRoomService {
     ChatRoomDTO createChatRoom(Long memberId, Long registerId);
     List<ChatRoomDTO> findAllByMemberId(Long memberId);
     ChatRoomDTO findById(Long roomId);
- /*여기 손보기*/
-    /*   int findByUnreadCount(Long memberId);*/
+    int findByUnreadCount(Long memberId);
 }

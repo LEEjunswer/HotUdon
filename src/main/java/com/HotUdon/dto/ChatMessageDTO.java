@@ -17,9 +17,7 @@
 
         private String text;
 
-
         private String createDate;
-
 
         private String updateDate;
 

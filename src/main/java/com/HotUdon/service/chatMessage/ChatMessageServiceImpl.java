@@ -44,7 +44,6 @@ public class ChatMessageServiceImpl implements ChatMessageService{
                         .createDate(LocalDateTime.now().format(formatter))
                         .updateDate(LocalDateTime.now().format(formatter))
                         .build();
-
                         ChatMessage getChatMessage= chatMessageRepository.save(chatMessage);
                         return ChatMessageMapper.mapEntityToDto(getChatMessage);
               }

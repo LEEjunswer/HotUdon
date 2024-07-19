@@ -97,9 +97,6 @@ public class ChatApiController {
     public ResponseEntity<Map<String,String>> sendChat(@AuthenticationPrincipal PrincipalDetails principalDetails,
                                                        @PathVariable("roomId")Long roomId,
                                                        @RequestBody ChatMessageDTO chatMessageDTO){
-        System.out.println("진입체크 chatPost");
-        System.out.println("chatMeesage"+chatMessageDTO);
-        System.out.println("roomId = " + roomId);
         Map<String, String> response = new HashMap<>();
         if (principalDetails == null) {
             response.put("msg", "잘못된 접근입니다.");
@@ -132,12 +129,16 @@ public class ChatApiController {
             return ResponseEntity.ok(response);
         }
     @GetMapping("/chat/{roomId}/messages")
-    public ResponseEntity<List<ChatMessageDTO>> getMessages(@PathVariable Long roomId) {
+    public ResponseEntity<ChatRoomDTO> getMessages(@PathVariable Long roomId) {
         System.out.println("roomId = " + roomId);
         ChatRoomDTO chatRoomDTO = chatRoomService.findById(roomId);
         System.out.println("chatRoomDTO.getMessages() = " + chatRoomDTO.getMessages());
+        /*구매자*/
+        chatRoomDTO.getRegister().getMember();
+        chatRoomDTO.getMember();
+
         /*판매자가 receiverId senderId가 구매자*/
-        return ResponseEntity.ok(chatRoomDTO.getMessages());
+        return ResponseEntity.ok(chatRoomDTO);
     }
 
     }

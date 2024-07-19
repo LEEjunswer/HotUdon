@@ -40,6 +40,9 @@ public class ChatRoomController {
         }
         Member member = principalDetails.getMember();
         List<ChatRoomDTO> chatRoomDTOList =chatRoomService.findAllByMemberId(member.getId());
+        if(chatRoomDTOList == null){
+            return "chat/myMessage";
+        }
         ChatRoomDTO chatRoomDTO =  chatRoomDTOList.get(0);
 
         RegisterDTO registerDTO = registerService.findById(chatRoomDTO.getRegister().getId());

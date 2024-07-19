@@ -65,6 +65,10 @@ dependencies {
 
 	// 로그체크 및 서블릿 관련
 	compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+
+	/*쿼츠 라이브러리*/
+	// https://mvnrepository.com/artifact/org.quartz-scheduler/quartz
+	implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
 }
 // Querydsl 설정부
 def generated = 'src/main/generated'

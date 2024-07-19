@@ -67,7 +67,7 @@ function sendMessage(receiverId) {
                 console.log(data.msg);
             }
             // 메시지 화면에 추가
-            showMessage(messageData.text, messageData.senderId, messageData.receiverId);
+            showMessage(messageData.getMessages().text, messageData.getMessages().senderId, messageData.getMessages().receiverId);
         })
         .catch(error => console.error('Error:', error));
 }
@@ -81,13 +81,13 @@ function fetchMessages() {
             messageContainer.innerHTML = '';
             data.forEach(message => {
                 console.log(message);
-                showMessage(message.text, message.senderId, message.receiverId);
+                showMessage(message.getMessages().text, message.getMessages().senderId, message.getMessages().receiverId, message.getMember().profileImg, message.getRegister().getMember().profileImg);
             });
         })
         .catch(error => console.error('Error:', error));
 }
-/*메시지창에서 닉네임이나 이런거 끌 고 올 수 있으면 넣어보자*/
-function showMessage(text, senderId, receiverId) {
+/*메시지창에서 닉네임이나 이런거 끌 고 올 수 있으면 넣어보자  구매자 이미지 판매자 이미지*/
+function showMessage(text, senderId, receiverId,senderImg,receiverImg) {
     const messageContainer = document.getElementById('message-container');
     const messageElement = document.createElement('div');
     /*구매자일떄 접속한 아이디가 트루 */
@@ -112,7 +112,7 @@ function showMessage(text, senderId, receiverId) {
     messageElement.innerHTML = `
                 <div class="chat-image avatar">
                     <div class="w-10 rounded-full">
-                        <img alt="Avatar" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                        <img alt="Avatar" th:src="@{/profile + ${profile}}" />
                     </div>
                 </div>
                 <div class="chat-header">

@@ -82,5 +82,19 @@ public class RegisterServiceImpl implements RegisterService{
         return registerPage.map(RegisterMapper::mapEntityToDTO);
     }
 
+    @Override
+    public Page<RegisterDTO> getNotSoldOutProduct(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Register> registerPage = registerRepository.getNotSoldOutProduct(pageable);
+        return registerPage.map(RegisterMapper :: mapEntityToDTO);
+    }
+
+    @Override
+    public Page<RegisterDTO> getNotSoldOutProductMyLocation(String location,int page ,int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Register> registerPage = registerRepository.getNotSoldOutProductMyLocation(location,pageable);
+        return registerPage.map(RegisterMapper :: mapEntityToDTO);
+    }
+
 
 }
